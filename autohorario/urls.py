@@ -23,4 +23,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name="index"),
     path('login/', views.base, name="login"),
+    path('teste/', views.testecomponents, name="teste"),
 ]

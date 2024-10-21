@@ -2,8 +2,11 @@ from django.http import HttpResponse
 from django.shortcuts import render
 
 def index(request):
-    nome = "Gustavo Lima"
+    nome = "Gusvn "
     return HttpResponse(f"Olár {nome}")
+
+def testecomponents(request):
+    return render(request, "components/menu.html")
 
 def base(request):
     return render(request, "base.html")
