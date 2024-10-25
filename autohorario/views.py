@@ -7,3 +7,6 @@ def index(request):
 
 def base(request):
     return render(request, "base.html")
+
+def recoverPassword(request):
+    return render(request, "password-recovery.html")

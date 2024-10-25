@@ -11,3 +11,4 @@ Abra o terminal do git (gitBash) e execute o comando `git clone https://github.c
 3. Instalar o python
 Acesse o link de download no site oficial do python https://www.python.org/downloads/ e faça o download de uma versão do python (acima do 3.12).
 
+> Quote block
