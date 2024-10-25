@@ -24,4 +24,5 @@ urlpatterns = [
     path('', views.index, name="index"),
     path('login/', views.base, name="login"),
     path('recuperar-senha/', views.recoverPassword, name="recover password")
+    path('teste/', views.testecomponents, name="teste"),
 ]
