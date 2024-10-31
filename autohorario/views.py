@@ -8,6 +8,9 @@ def index(request):
 def testecomponents(request):
     return render(request, "components/menu.html")
 
+def testecomponents2(request):
+    return render(request, "components/cards.html")
+
 def base(request):
     return render(request, "base.html")
 
