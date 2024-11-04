@@ -23,7 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name="index"),
     path('login/', views.base, name="login"),
-    path('recuperar-senha/', views.recoverPassword, name="recover password")
+    path('recuperar-senha/', views.recoverPassword, name="recover password"),
     path('teste/', views.testecomponents, name="teste"),
     path('teste2/', views.testecomponents2, name="teste2"),
 ]
