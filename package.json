@@ -4,7 +4,7 @@
   "description": "Repositório da PPI de 2024/2 referente ao desenvolvimento da plataforma Auto-horário para a APAE FW",
   "main": "postcss.config.js",
   "scripts": {
-    "dev": "npx tailwindcss -i ./autohorario/static/src/input.css -o ./autohorario/static/src/styles.css --watch",
+    "dev": "start npx tailwindcss -i ./autohorario/static/src/input.css -o ./autohorario/static/src/styles.css --watch && start pipenv run python ./manage.py runserver",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
