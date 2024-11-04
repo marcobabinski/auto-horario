@@ -27,9 +27,6 @@ Com o Node.js instalado, o próximo passo é instalar as dependências do projet
 #### 8 Instalar o modulo de refresh automático (TBD)
 <br/>
 
-<<<<<<< HEAD
-> Quote block
-=======
 ## Execução (desenvolvimento)
 
 ### 1. Entrar na venv
@@ -51,4 +48,3 @@ Finalmente, para iniciar o servidor do projeto, execute o seguinte comando na ra
 `python.exe .\manage.py runserver`
 
 Após rodar este comando, o servidor estará em execução, e você poderá acessar a aplicação no navegador. Normalmente, a URL será http://127.0.0.1:8000/
->>>>>>> cfe3fcae488e3dcf2c9d6ccd2ccd1c2d1f93a6d6
