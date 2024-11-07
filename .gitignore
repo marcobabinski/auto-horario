@@ -2,4 +2,5 @@ venv
 node_modules
 autohorario/__pycache__/**
 autohorario/migrations/__pycache__/**
+config/__pycache__/**
 autohorario/static/src/styles.css
