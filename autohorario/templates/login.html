@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+{% load static %}
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="{% static 'src/styles.css' %}" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="h-svh w-full bg-background flex">
+        <div class="h-svh w-[600px] max-w-[40%]">
+            <img src="{% static "images/login-splash.jpeg" %}" alt="" srcset="" class="h-full w-full object-cover">
+        </div>
+        <div class="w-full flex justify-center items-center">
+            <div id="login-form" class="w-[400px] flex flex-col gap-2 text-start">
+                <div>
+                    <c-title></c-title>
+                </div>
+                <div>
+                    <c-text-input 
+                        name="email"
+                        placeholder="fulano@email.com.br"
+                        label="E-mail"
+                    />
+                </div>
+                <div>
+                    <c-text-input
+                        name="password"
+                        placeholder="••••••••••••"
+                        label="Senha:" 
+                    />
+                </div>
+                <div class="flex items-center mb-4 text-sm text-center justify-between">
+                    <div class="cursor-pointer">
+                        <input id="default-checkbox" type="checkbox" value="" class="w-4 h-4 text-secondary bg-white border-border rounded focus:ring-tertiary focus:ring-2 cursor-pointer">
+                        <label for="default-checkbox" class="ms-2 text-sm font-medium text-border cursor-pointer">Lembrar senha</label>
+                    </div>
+                    
+                    <a href="/recuperar-senha" class="underline text-tertiary">Esqueci minha senha</a>
+                </div>
+                
+                <form action="/autohorario/login/" method="POST">
+                    {% csrf_token %}
+                    <div>
+                        <label for="usuario">Usuário</label>
+                        <input type="text" name="usuario" placeholder="Digite seu usuário" required>
+                    </div>
+                    <div>
+                        <label for="senha">Senha</label>
+                        <input type="password" name="senha" placeholder="••••••••••••" required>
+                    </div>
+                    <input type="submit" class="btn btn-primary" value="Entrar">
+                </form>
+                <c-form-button color="secondary">Entrar</c-button>
+                <c-form-button color="tertiary">Entrar</c-button>
+                <a href="" class="text-sm text-tertiary underline text-center">Não possuo conta</a>
+
+                {% if messages %}
+                    {% for m in messages %}
+
+                                    {{ m }}
+
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
