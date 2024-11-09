@@ -21,6 +21,7 @@ from . import views
 urlpatterns = [
     path('', views.index, name="index"),
     path('login/', views.fazer_login, name="fazer_login"),
+    path('logout/', views.fazer_logout, name='fazer_logout'),
     path('recuperar-senha/', views.recoverPassword, name="recover password"),
     path('teste/', views.testecomponents, name="teste"),
     path('teste2/', views.testecomponents2, name="teste2"),

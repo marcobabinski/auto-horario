@@ -44,5 +44,9 @@ def fazer_login(request):
     contexto = {"form": form}
     return render(request, 'login.html', contexto)
 
+def fazer_logout(request):
+    logout(request)
+    return HttpResponseRedirect("/autohorario/")
+
 def recoverPassword(request):
     return render(request, "password-recovery.html")
