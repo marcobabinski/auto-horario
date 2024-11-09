@@ -2,6 +2,7 @@
 
 {% load static %}
 
+{% block conteudo %}
 <link href="{% static 'src/styles.css' %}" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -126,4 +127,4 @@
     </div>
 </aside>
 
-<script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+{% endblock %}

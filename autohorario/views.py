@@ -9,9 +9,7 @@ from django.utils import timezone
 
 def index(request):
     if request.user.is_authenticated:
-        nome = "Gusvn "
-        return HttpResponse(f"Olár {nome}")
-        # return render(request, 'certificados/index.html', contexto)
+        return render(request, 'index.html')
     else:
         return HttpResponseRedirect("/autohorario/login/")
 
