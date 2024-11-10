@@ -1,0 +1,22 @@
+<!--
+Input textual básico de form.
+Parâmetros
+- name: name do label e do input
+- label/slot: texto do label 
+- placeholder: valor de placeholder do input
+
+Estilo
+- labelClass
+- inputClass
+-->
+
+{% if slot or label %}
+    <label for="{{ name }}" class="text-sm {{ labelClass }}">
+        {% if slot %}
+        {{ slot.strip }}
+        {% else %}
+        {{ label }}
+        {% endif %}
+    </label>
+{% endif %}
+<input type="text" name="{{ name }}" placeholder="{{ placeholder | default:"placeholder" }}" class="w-full text-sm bg-yellow-400 border border-border rounded-md px-4 py-2 placeholder-border {{ inputClass }}">

@@ -1,0 +1,26 @@
+<!--
+Variáveis
+- color: primary | secondary | tertiary
+- type: default | alternative
+- rounded
+
+- class: extensão de classe
+- slot: texto do botão
+-->
+
+<input type="submit" 
+value={{slot}}
+class="
+{% if color == 'primary' %}
+text-black bg-primary focus:ring-yellow-200
+{% elif color == 'secondary' %}
+text-black bg-secondary focus:ring-green-200
+{% elif color == 'tertiary' %}
+text-white bg-tertiary focus:ring-blue-200
+{% endif %}
+{% if rounded %}
+rounded-full
+{% endif %}
+hover:brightness-90 focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none cursor-pointer transition-all
+{{ class }}"
+>

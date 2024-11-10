@@ -1,48 +1,21 @@
-<!DOCTYPE html>
-
 {% load static %}
-<html lang="en">
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Auto-horário</title>
     <link href="{% static 'src/styles.css' %}" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
 </head>
 <body>
-    <div class="h-svh w-full bg-background flex">
-        <div class="h-svh w-[600px] max-w-[40%]">
-            <img src="{% static "images/login-splash.jpeg" %}" alt="" srcset="" class="h-full w-full object-cover">
-        </div>
-        <div class="w-full flex justify-center items-center">
-            <div id="login-form" class="w-[400px] flex flex-col gap-2 text-start">
-                <div class="">
-                    <h1 class="text-xl font-handwrite">Login:</h1>
-                </div>
-                <div>
-                    <label for="email" class="text-sm">E-mail:</label>
-                    <input type="tex" name="email" placeholder="joao.silva@gmail.com" class="w-full text-sm bg-white border border-border rounded-md px-4 py-2 placeholder-border">
-                </div>
-                <div>
-                    <div class="">
-                        <label for="password" class="text-sm">Senha:</label>
-                        <input type="password" name="senha" placeholder="••••••••••••" class="w-full text-sm bg-white border border-border rounded-md px-4 py-2 placeholder-border">
-                    </div>
-                </div>
-                <div class="flex items-center mb-4 text-sm text-tertiary underline text-center justify-between">
-                    <div>
-                        <input id="default-checkbox" type="checkbox" value="" class="w-4 h-4 text-secondary bg-white border-border rounded focus:ring-tertiary focus:ring-2">
-                        <label for="default-checkbox" class="ms-2 text-sm font-medium text-border">Lembrar senha</label>
-                    </div>
-                    
-                    <a href="">Esqueci minha senha</a>
-                </div>
-                <input type="submit" value="Acessar" class="min-w-[250px] w-min text-sm bg-primary rounded-md px-8 py-2 cursor-pointer mx-auto">
-                <a href="" class="text-sm text-tertiary underline text-center">Não possuo conta</a>
-            </div>
-        </div>
-    </div>
+    {% block conteudo %}
+
+    {% endblock %}
+
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
 </body>
 </html>
