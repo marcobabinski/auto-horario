@@ -21,7 +21,7 @@
                 <form action="/login/" method="POST">
                     {% csrf_token %}
                     <div>
-                        <c-title></c-title>
+                        <c-title>Login</c-title>
                     </div>
                     <div>
                         <c-text-input 
@@ -34,6 +34,7 @@
                         <c-text-input
                             name="senha"
                             placeholder="••••••••••••"
+                            type="password"
                             label="Senha:" 
                         />
                     </div>
@@ -43,11 +44,13 @@
                             <label for="default-checkbox" class="ms-2 text-sm font-medium text-border cursor-pointer">Lembrar senha</label>
                         </div>
                         
-                        <a href="/recuperar-senha" class="underline text-tertiary">Esqueci minha senha</a>
+                        <c-link href="/recuperar-senha">Esqueci minha senha</c-link>
                     </div>
 
-                    <c-form-button  type="submit" color="secondary">Entrar</c-button>
-                    <a href="" class="text-sm text-tertiary underline text-center">Não possuo conta</a>
+                    <div class="flex flex-col">
+                        <c-form-button type="submit" color="secondary">Entrar</c-button>
+                        <c-link href="" class="text-center">Não possuo conta</c-link>
+                    </div>
                 </form>
                 {% if messages %}
                     {% for m in messages %}

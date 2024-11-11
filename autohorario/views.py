@@ -22,7 +22,7 @@ def testecomponents2(request):
 
 def fazer_login(request):
     if request.user.is_authenticated:
-        return HttpResponseRedirect("/")
+        return HttpResponseRedirect("/agenda")
 
     if request.method == 'POST':
         form = FormLogin(request.POST)
@@ -32,7 +32,7 @@ def fazer_login(request):
             user = authenticate(request, username=usuario, password=senha) # retorna None se o usuário não é válido
             if user is not None:
                 login(request, user)
-                return HttpResponseRedirect("/")
+                return HttpResponseRedirect("/agenda")
             else:
                 messages.error(request, "Usuário e/ou senha incorretos. Tente de novo.")
         else:
@@ -51,8 +51,24 @@ def fazer_logout(request):
 def recoverPassword(request):
     return render(request, "password-recovery.html")
 
-from autohorario.models import Profissional
+from autohorario.models import Profissional, Turma
 
 def profissionais(request):
     profissionais = Profissional.objects.all()
-    return render(request, "profissionais.html", {'profissionais': profissionais, 'nome': "Bruno"})
+    return render(request, "profissionais.html", {'profissionais': profissionais})
+
+def agenda(request):
+    profissionais = Profissional.objects.all()
+    return render(request, "agenda.html", {'profissionais': profissionais})
+
+def turmas(request):
+    turmas = Turma.objects.all()
+    return render(request, "turmas.html", {'turmas': turmas})
+
+def vinculos(request):
+    profissionais = Profissional.objects.all()
+    return render(request, "vinculos.html", {'profissionais': profissionais})
+
+def atividades(request):
+    profissionais = Profissional.objects.all()
+    return render(request, "atividades.html", {'profissionais': profissionais})

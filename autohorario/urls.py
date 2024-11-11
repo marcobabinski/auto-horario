@@ -25,5 +25,9 @@ urlpatterns = [
     path('recuperar-senha/', views.recoverPassword, name="recover password"),
     path('teste/', views.testecomponents, name="teste"),
     path('teste2/', views.testecomponents2, name="teste2"),
-    path('profissionais', views.profissionais, name="profissionais")
+    path('profissionais', views.profissionais, name="profissionais"),
+    path('agenda', views.agenda, name="agenda"),
+    path('turmas', views.turmas, name="turmas"),
+    path('vinculos', views.vinculos, name="vinculos"),
+    path('atividades', views.atividades, name="atividades"),
 ]

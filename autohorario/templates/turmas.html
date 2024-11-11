@@ -1,12 +1,12 @@
 {% extends "dashboard.html" %}
 
 {% block tela %}
-    <c-title underline>Profissionais</c-title>
+    <c-title underline>Turmas</c-title>
     <div class="flex gap-4 py-4">
-        {% for p in profissionais %}
+        {% for p in turmas %}
         <c-card
             title={{p.nome}}
-            description={{p.endereco}}
+            description="Alunos: {{p.qnt_de_alunos}}"
         />
         {% endfor %}
     </div>

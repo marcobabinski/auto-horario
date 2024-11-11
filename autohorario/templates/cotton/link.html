@@ -1,0 +1,10 @@
+<!--
+Variáveis
+- href: endereço de link para destinar
+- slot: valor textual do link
+- class: extensor de classe
+-->
+
+<a href="{{href|default:slot}}" class="underline text-tertiary-500 {{ class }}">
+    {{ slot }}
+</a>
