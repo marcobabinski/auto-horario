@@ -11,7 +11,7 @@ def index(request):
     if request.user.is_authenticated:
         return render(request, 'index.html')
     else:
-        return HttpResponseRedirect("/autohorario/login/")
+        return HttpResponseRedirect("/login/")
 
 
 def testecomponents(request):
@@ -22,7 +22,7 @@ def testecomponents2(request):
 
 def fazer_login(request):
     if request.user.is_authenticated:
-        return HttpResponseRedirect("/autohorario/")
+        return HttpResponseRedirect("/")
 
     if request.method == 'POST':
         form = FormLogin(request.POST)
@@ -32,7 +32,7 @@ def fazer_login(request):
             user = authenticate(request, username=usuario, password=senha) # retorna None se o usuário não é válido
             if user is not None:
                 login(request, user)
-                return HttpResponseRedirect("/autohorario/")
+                return HttpResponseRedirect("/")
             else:
                 messages.error(request, "Usuário e/ou senha incorretos. Tente de novo.")
         else:
@@ -46,7 +46,7 @@ def fazer_login(request):
 
 def fazer_logout(request):
     logout(request)
-    return HttpResponseRedirect("/autohorario/")
+    return HttpResponseRedirect("/")
 
 def recoverPassword(request):
     return render(request, "password-recovery.html")
