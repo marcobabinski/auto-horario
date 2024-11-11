@@ -1,0 +1,12 @@
+<a href="{{href}}" 
+   class="w-8 h-8 border-white border rounded-md flex justify-center items-center transition-colors text-white
+   hover:bg-white
+    {% if not danger %}
+      hover:text-tertiary-400
+    {% else %}
+        hover:text-red-500
+    {% endif %}
+   "
+>
+    {% heroicon_outline icon %}
+</a>
