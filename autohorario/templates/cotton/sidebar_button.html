@@ -1,0 +1,20 @@
+<!--
+Variáveis
+- icon: nome do ícone no hero-icons
+- danger: coloração diferente ao interagir
+- href: para qual endereço aponta
+- class: extensor de classe padrão
+-->
+
+<a href="{{href}}" 
+   class="w-12 h-12 border-white border rounded-md flex justify-center items-center transition-colors text-white
+   hover:bg-white
+    {% if not danger %}
+      hover:text-tertiary-400
+    {% else %}
+        hover:text-red-500
+    {% endif %}
+   "
+>
+    {% heroicon_outline icon %}
+</a>
