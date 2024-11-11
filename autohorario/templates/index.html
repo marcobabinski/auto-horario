@@ -1,5 +1,13 @@
 {% extends 'base.html' %}
 
 {% block conteudo %}
-    {% include 'components/menu.html' %}
+    <div class="grid grid-cols-2">
+        <div class="">
+            {% include 'components/menu.html' %}
+        </div>
+        <div class="">
+            {% block direita %}{% endblock direita %}
+        </div>
+    </div>
+
 {% endblock %}

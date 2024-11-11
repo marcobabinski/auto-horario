@@ -50,3 +50,9 @@ def fazer_logout(request):
 
 def recoverPassword(request):
     return render(request, "password-recovery.html")
+
+from autohorario.models import Profissional
+
+def profissionais(request):
+    profissionais = Profissional.objects.all()
+    return render(request, "profissionais.html", {'profissionais': profissionais, 'nome': "Bruno"})
