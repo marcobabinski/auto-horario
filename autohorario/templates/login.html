@@ -13,7 +13,7 @@
 </head>
 <body>
     <div class="h-svh w-full bg-background flex">
-        <div class="h-svh w-[600px] max-w-[40%]">
+        <div class="h-svh w-[600px] max-w-[40%] md:block hidden">
             <img src="{% static "images/login-splash.jpeg" %}" alt="" srcset="" class="h-full w-full object-cover">
         </div>
         <div class="w-full flex justify-center items-center">
@@ -28,17 +28,20 @@
                             name="usuario"
                             placeholder="fulano@email.com.br"
                             label="E-mail"
+                            inputClass="mb-2"
                         />
                     </div>
                     <div>
-                        <c-text-input
+                        <c-password-input
                             name="senha"
                             placeholder="••••••••••••"
                             type="password"
-                            label="Senha:" 
+                            label="Senha:"
+                            min="5"
+                            max="20"
                         />
                     </div>
-                    <div class="flex items-center mb-4 text-sm text-center justify-between">
+                    <div class="flex items-center mt-2 mb-4 text-sm text-center justify-between">
                         <div class="cursor-pointer">
                             <input id="default-checkbox" type="checkbox" value="" class="w-4 h-4 text-secondary bg-white border-border rounded focus:ring-tertiary focus:ring-2 cursor-pointer">
                             <label for="default-checkbox" class="ms-2 text-sm font-medium text-border cursor-pointer">Lembrar senha</label>
@@ -49,7 +52,7 @@
 
                     <div class="flex flex-col">
                         <c-form-button type="submit" color="secondary">Entrar</c-button>
-                        <c-link href="" class="text-center">Não possuo conta</c-link>
+                        <c-link href="/" class="text-center">Não possuo conta</c-link>
                     </div>
                 </form>
                 {% if messages %}

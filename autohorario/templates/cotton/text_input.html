@@ -5,6 +5,8 @@ Parâmetros
 - label/slot: texto do label 
 - placeholder: valor de placeholder do input
 - type: tipo do input - padrão: text
+- max: máximo de caracteres
+- min: mínimo de caracteres
 
 Estilo
 - labelClass
@@ -20,4 +22,9 @@ Estilo
         {% endif %}
     </label>
 {% endif %}
-<input type="{{type|default:"text"}}" name="{{ name }}" placeholder="{{ placeholder | default:"placeholder" }}" class="w-full text-sm bg-white border border-border rounded-md px-4 py-2 placeholder-border {{ inputClass }}">
+<input type="{{type|default:"text"}}" 
+    name="{{ name }}" 
+    placeholder="{{ placeholder | default:"placeholder" }}" 
+    {% if min %}minlength={{min}}{% endif %}
+    {% if max %}maxlength={{max}}{% endif %}
+    class="w-full text-sm bg-white border border-border rounded-md px-4 py-2 placeholder-border {{ inputClass }}">
