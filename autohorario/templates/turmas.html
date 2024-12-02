@@ -2,12 +2,29 @@
 
 {% block tela %}
     <c-title underline>Turmas</c-title>
-    <div class="flex gap-4 py-4">
+    {% if not turma %}
+    <div class="grid gap-4 py-4 grid-cols-2">
         {% for p in turmas %}
         <c-card
+            cardId={{p.pk}}
             title={{p.nome}}
             description="Alunos: {{p.qnt_de_alunos}}"
         />
         {% endfor %}
     </div>
+    {% else %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Salvar</button>
+        <a href="{% url 'turmas' %}">Cancelar</a>
+    </form>
+    {% endif %}
+
+    <a href="?new=true">
+        <div class="rounded-md bg-tertiary-500 text-white fixed bottom-4 right-4 cursor-pointer p-2">
+            {% heroicon_solid "plus" size=40 %}
+        </div>
+    </a>
+
 {% endblock tela %}

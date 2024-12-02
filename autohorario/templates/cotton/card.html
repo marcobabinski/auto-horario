@@ -5,16 +5,18 @@ Variáveis:
 - description: texto secundário
 -->
 
-<div class="bg-primary-100 rounded-lg shadow-sm border border-primary-700 flex justify-between items-center max-w-[500px] px-4 py-2 flex-grow w-full">
+<div class="bg-primary-100 rounded-lg shadow-sm border border-primary-700 flex justify-between items-center max-w-[500px] px-4 py-2 flex-grow">
     <div class="">
         <h1 class="font-bold">{{ title }}</h1>
         <p>{{ description }}</p>
     </div>
     <div class="flex gap-2">
         <c-card-button
+            href="?edit_id={{cardId}}"
             icon="pencil-square"
         />
         <c-card-button
+            href="?delete_id={{cardId}}"
             icon="trash"
             danger
         />

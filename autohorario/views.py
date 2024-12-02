@@ -1,24 +1,19 @@
 from django.contrib import messages
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.backends import UserModel
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from autohorario.forms import FormLogin
 from django.http.response import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.utils import timezone
+from .forms import TurmaForm
+from .models import Profile
 
 def index(request):
     if request.user.is_authenticated:
-        return render(request, 'index.html')
+        return render(request, 'dashboard.html')
     else:
-        return HttpResponseRedirect("/login/")
-
-
-def testecomponents(request):
-    return render(request, "components/menu.html")
-
-def testecomponents2(request):
-    return render(request, "components/cards.html")
+        return redirect(fazer_login)
 
 def fazer_login(request):
     if request.user.is_authenticated:
@@ -62,8 +57,63 @@ def agenda(request):
     return render(request, "agenda.html", {'profissionais': profissionais})
 
 def turmas(request):
+    # Verifica se o usuário está autenticado
+    if request.user.is_authenticated:
+        # Acessa o perfil vinculado ao usuário autenticado
+        try:
+            profile = Profile.objects.get(user=request.user)
+        except Profile.DoesNotExist:
+            profile = None  # Caso o perfil ainda não tenha sido criado
+    
+    # Verifica se há um parâmetro "edit_id" na requisição.
+    edit_id = request.GET.get('edit_id')
+
+    if edit_id:
+        # Tenta buscar a turma correspondente; se não existir, retorna 404.
+        turma = get_object_or_404(Turma, id_turma=edit_id)
+
+        # Cria um formulário pré-preenchido com os dados da turma.
+        if request.method == "POST":
+            form = TurmaForm(request.POST, instance=turma)
+            if form.is_valid():
+                form.save()
+                return redirect('turmas')  # Redireciona para a página geral de turmas.
+        else:
+            form = TurmaForm(instance=turma)
+        
+        return render(request, "turmas.html", {'form': form, 'turma': turma})
+    
+    # Verifica se há um parâmetro "delete_id" na requisição.
+    delete_id = request.GET.get('delete_id')
+
+    if delete_id:
+        # Tenta buscar a turma correspondente; se não existir, retorna 404.
+        turma = get_object_or_404(Turma, id_turma=delete_id)
+
+        # Apaga a turma.
+        if request.method == "POST":
+            turma.delete()
+            return redirect('turmas')  # Redireciona para a página geral de turmas.
+
+        # Renderiza a confirmação de exclusão.
+        return render(request, "delete_turma.html", {'turma': turma})
+
+    # Verifica se o parâmetro "new" está presente na requisição para criação de uma nova turma.
+    if request.GET.get('new'):
+        if request.method == "POST":
+            form = TurmaForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect('turmas')  # Redireciona para a página geral de turmas.
+        else:
+            form = TurmaForm()
+
+        # Renderiza o formulário de criação.
+        return render(request, "create_turma.html", {'form': form})
+    
+    # Caso contrário, renderiza a lista geral de turmas.
     turmas = Turma.objects.all()
-    return render(request, "turmas.html", {'turmas': turmas})
+    return render(request, "turmas.html", {'turmas': turmas, 'profile': profile})
 
 def vinculos(request):
     profissionais = Profissional.objects.all()

@@ -1,0 +1,18 @@
+<!--
+
+-->
+
+<div class="text-white flex gap-2 mb-4">
+    <div class="">
+        {% if profile %}
+            <img src="{{ profile.foto_perfil.url }}" class="rounded-full w-16 h-16 overflow-hidden object-cover" alt="">
+        {% else %}
+            {% heroicon_solid "user-circle" size=50 %}
+        {% endif %}
+        
+    </div>
+    <div>
+        <p>Olá, <span class="font-bold">{{request.user.first_name|default:"Usuário"}}</span>!</p>
+        <p>Seja bem-vindo!</p>
+    </div>
+</div>

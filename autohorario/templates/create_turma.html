@@ -1,0 +1,11 @@
+{% extends "dashboard.html" %}
+
+{% block tela %}
+    <c-title underline>Turmas</c-title>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded">Salvar</button>
+        <a href="{% url 'turmas' %}" class="bg-gray-300 px-4 py-2 rounded">Cancelar</a>
+    </form>
+{% endblock tela %}

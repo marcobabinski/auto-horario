@@ -88,6 +88,8 @@ DATABASES = {
     }
 }
 
+MEDIA_URL = '/media/'  # URL base para servir os arquivos de mídia.
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Diretório onde os arquivos serão armazenados.
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators

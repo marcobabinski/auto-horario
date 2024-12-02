@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 django-cotton = "*"
 heroicons = {extras = ["django"], version = "*"}
+pillow = "*"
 
 [dev-packages]
 
