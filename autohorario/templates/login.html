@@ -12,11 +12,24 @@
     <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
 </head>
 <body>
+    <div id="alerts-area" class="absolute top-0 left-1/2 -translate-x-1/2 flex flex-col py-2">
+        <c-alert
+                tags="error"
+                title="Oooo"
+                text="everybody was kung fu fighting"
+            />
+        <c-alert
+            tags="success"
+            title="Oooo"
+            text="everybody was kung fu fighting"
+        />
+    </div>
     <div class="h-svh w-full bg-background flex">
         <div class="h-svh w-[600px] max-w-[40%] md:block hidden">
             <img src="{% static "images/login-splash.jpeg" %}" alt="" srcset="" class="h-full w-full object-cover">
         </div>
         <div class="w-full flex justify-center items-center">
+            
             <div id="login-form" class="w-[400px] flex flex-col gap-2 text-start">
                 <form action="/login/" method="POST">
                     {% csrf_token %}
@@ -65,5 +78,21 @@
             </div>
         </div>
     </div>
+
+    <a href="" class="transition opacity-0"></a>
+
+    <script>
+        const alertsArea = document.querySelector("#alerts-area")
+        const alertList = alertsArea.children
+
+        {% comment %} setTimeout(() => {alert('a')}, 500) {% endcomment %}
+        for (let i = 0; i < alertList.length; i++) {
+            const element = alertList[i];
+
+            setTimeout(() => {
+                element.classList.add("transition opacity-0")
+            }, 5000 + 1000 * i)
+        }
+    </script>
 </body>
 </html>
