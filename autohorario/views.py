@@ -49,8 +49,51 @@ def recoverPassword(request):
 from autohorario.models import Profissional, Turma, Atividade
 
 def profissionais(request):
+    if request.user.is_authenticated:
+        try:
+            profile = Profile.objects.get(user=request.user)
+        except Profile.DoesNotExist:
+            profile = None 
+    
+    edit_id = request.GET.get('edit_id')
+
+    if edit_id:
+        profissional = get_object_or_404(Profissional, id_profissional=edit_id)
+
+        if request.method == "POST":
+            form = ProfissionalForm(request.POST, instance=profissional)
+            if form.is_valid():
+                form.save()
+                return redirect('profissionais')
+        else:
+            form = ProfissionalForm(instance=profissional)
+        
+        return render(request, "profissionais.html", {'form': form, 'profissional': profissional, 'profile': profile})
+    
+    delete_id = request.GET.get('delete_id')
+
+    if delete_id:
+        profissional = get_object_or_404(Profissional, id_profissional=delete_id)
+
+        if request.method == "POST":
+            profissional.delete()
+            return redirect('profissionais')  
+
+        return render(request, "delete_profissional.html", {'profissional': profissional, 'profile': profile})
+
+    if request.GET.get('new'):
+        if request.method == "POST":
+            form = ProfissionalForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect('profissionais') 
+        else:
+            form = ProfissionalForm()
+
+        return render(request, "create_profissional.html", {'form': form, 'profile': profile})
+
     profissionais = Profissional.objects.all()
-    return render(request, "profissionais.html", {'profissionais': profissionais})
+    return render(request, "profissionais.html", {'profissionais': profissionais, 'profile': profile})
 
 def agenda(request):
     profissionais = Profissional.objects.all()

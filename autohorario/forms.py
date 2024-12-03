@@ -21,13 +21,19 @@ class TurmaForm(forms.ModelForm):
             }
 
 class ProfissionalForm(forms.ModelForm):
+    id_atividade = forms.ModelMultipleChoiceField(
+        queryset=Atividade.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        label="Atividades"
+    )
+    
     class Meta:
         model = Profissional
-        fields = ['nome', 'endereco']  
-    
+        fields = ['nome', 'endereco', 'id_atividade']
         labels = {
-                'endereco': ('Endereço'),
-            }
+            'nome': 'Nome do Profissional',
+            'endereco': 'Endereço',
+        }
 
 class AtividadeForm(forms.ModelForm):
     id_caracteristica = forms.ModelChoiceField(
