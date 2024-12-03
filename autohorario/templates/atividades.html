@@ -2,7 +2,29 @@
 
 {% block tela %}
     <c-title underline>Atividades</c-title>
-    <div class="py-4">
-        Atividades aqui
+    {% if not atividade %}
+    <div class="grid gap-4 py-4 grid-cols-2">
+        {% for p in atividades %}
+        <c-card
+            cardId={{p.pk}}
+            title="{{p.nome}} - {{p.carga_horaria}}h/semana"
+            description="{{p.id_caracteristica.nome}}"
+        />
+        {% endfor %}
     </div>
+    {% else %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Salvar</button>
+        <a href="{% url 'atividades' %}">Cancelar</a>
+    </form>
+    {% endif %}
+
+    <a href="?new=true">
+        <div class="rounded-md bg-tertiary-500 text-white fixed bottom-4 right-4 cursor-pointer p-2">
+            {% heroicon_solid "plus" size=40 %}
+        </div>
+    </a>
+
 {% endblock tela %}

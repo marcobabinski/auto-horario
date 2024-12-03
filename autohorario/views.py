@@ -6,8 +6,8 @@ from autohorario.forms import FormLogin
 from django.http.response import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.utils import timezone
-from .forms import TurmaForm
-from .models import Profile
+from .forms import TurmaForm, ProfissionalForm, AtividadeForm
+from .models import Profile 
 
 def index(request):
     if request.user.is_authenticated:
@@ -46,7 +46,7 @@ def fazer_logout(request):
 def recoverPassword(request):
     return render(request, "password-recovery.html")
 
-from autohorario.models import Profissional, Turma
+from autohorario.models import Profissional, Turma, Atividade
 
 def profissionais(request):
     profissionais = Profissional.objects.all()
@@ -120,5 +120,48 @@ def vinculos(request):
     return render(request, "vinculos.html", {'profissionais': profissionais})
 
 def atividades(request):
-    profissionais = Profissional.objects.all()
-    return render(request, "atividades.html", {'profissionais': profissionais})
+    if request.user.is_authenticated:
+        try:
+            profile = Profile.objects.get(user=request.user)
+        except Profile.DoesNotExist:
+            profile = None 
+    
+    edit_id = request.GET.get('edit_id')
+
+    if edit_id:
+        atividade = get_object_or_404(Atividade, id_atividade=edit_id)
+
+        if request.method == "POST":
+            form = AtividadeForm(request.POST, instance=atividade)
+            if form.is_valid():
+                form.save()
+                return redirect('atividades')
+        else:
+            form = AtividadeForm(instance=atividade)
+        
+        return render(request, "atividades.html", {'form': form, 'atividade': atividade, 'profile': profile})
+    
+    delete_id = request.GET.get('delete_id')
+
+    if delete_id:
+        atividade = get_object_or_404(Atividade, id_atividade=delete_id)
+
+        if request.method == "POST":
+            atividade.delete()
+            return redirect('atividades')  
+
+        return render(request, "delete_atividade.html", {'atividade': atividade, 'profile': profile})
+
+    if request.GET.get('new'):
+        if request.method == "POST":
+            form = AtividadeForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect('atividades') 
+        else:
+            form = AtividadeForm()
+
+        return render(request, "create_atividade.html", {'form': form, 'profile': profile})
+
+    atividades = Atividade.objects.select_related('id_caracteristica').all()
+    return render(request, "atividades.html", {'atividades': atividades, 'profile': profile})
