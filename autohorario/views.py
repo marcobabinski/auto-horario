@@ -81,7 +81,7 @@ def turmas(request):
         else:
             form = TurmaForm(instance=turma)
         
-        return render(request, "turmas.html", {'form': form, 'turma': turma})
+        return render(request, "turmas.html", {'form': form, 'turma': turma, 'profile': profile})
     
     # Verifica se há um parâmetro "delete_id" na requisição.
     delete_id = request.GET.get('delete_id')
@@ -96,7 +96,7 @@ def turmas(request):
             return redirect('turmas')  # Redireciona para a página geral de turmas.
 
         # Renderiza a confirmação de exclusão.
-        return render(request, "delete_turma.html", {'turma': turma})
+        return render(request, "delete_turma.html", {'turma': turma, 'profile': profile})
 
     # Verifica se o parâmetro "new" está presente na requisição para criação de uma nova turma.
     if request.GET.get('new'):
@@ -109,7 +109,7 @@ def turmas(request):
             form = TurmaForm()
 
         # Renderiza o formulário de criação.
-        return render(request, "create_turma.html", {'form': form})
+        return render(request, "create_turma.html", {'form': form, 'profile': profile})
     
     # Caso contrário, renderiza a lista geral de turmas.
     turmas = Turma.objects.all()
