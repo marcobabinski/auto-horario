@@ -5,7 +5,8 @@
   "main": "postcss.config.js",
   "scripts": {
     "dev": "start npx tailwindcss -i ./autohorario/static/src/input.css -o ./autohorario/static/src/styles.css --watch && start pipenv run python ./manage.py runserver",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tailwind": "npx tailwindcss -i ./autohorario/static/src/input.css -o ./autohorario/static/src/styles.css --watch"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.20",
