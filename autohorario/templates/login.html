@@ -1,17 +1,7 @@
-<!DOCTYPE html>
+{% extends "_base.html" %}
 
+{% block content %}
 {% load static %}
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="{% static 'src/styles.css' %}" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
-</head>
-<body>
     <div id="alerts-area" class="absolute top-0 left-1/2 -translate-x-1/2 flex flex-col py-2">
         <c-alert
                 tags="error"
@@ -94,5 +84,4 @@
             }, 5000 + 1000 * i)
         }
     </script>
-</body>
-</html>
+{% endblock content %}

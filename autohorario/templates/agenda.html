@@ -1,8 +1,9 @@
-{% extends "dashboard.html" %}
+{% extends "_base.html" %}
 
-{% block tela %}
+{% block content %}
     <c-title underline>Agenda</c-title>
     <div class="py-4">
         Agenda aqui
     </div>
-{% endblock tela %}
+    <button hx-post="teste/">Post</button>
+{% endblock content %}

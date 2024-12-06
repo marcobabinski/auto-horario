@@ -36,6 +36,7 @@ urlpatterns = [
     path('turmas/edit/<int:id_turma>/', views.edit_turma, name='edit_turma'),
     path('profissionais/delete/<int:id_profissional>/', views.delete_profissional, name='delete_profissional'),
     path('profissionais/edit/<int:id_profissional>/', views.edit_profissional, name='edit_profissional'),
+    path('teste/', views.teste, name="teste")
 ]
 
 if settings.DEBUG:

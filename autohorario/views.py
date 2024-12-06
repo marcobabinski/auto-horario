@@ -183,3 +183,10 @@ def edit_profissional(request, id_profissional):
             return redirect('profissionais')
     
     return redirect('profissionais')
+
+def teste(request):
+    if request.method == "POST":
+        print("POOOOST")
+    else:
+        print("ÃAAAAAN")
+    return HttpResponse("a")
