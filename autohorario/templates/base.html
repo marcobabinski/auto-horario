@@ -17,5 +17,21 @@
     {% endblock %}
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+    <script>
+        function openEditModal(id, url) {
+            document.getElementById(`formEdit${id}`).setAttribute('action', url);
+            document.getElementById(`modal-edit${id}`).classList.remove('hidden');
+        }
+    
+        function openDeleteModal(id, url) {
+            document.getElementById(`delete-form${id}`).setAttribute('action', url);
+            document.getElementById(`modal-delete${id}`).classList.remove('hidden');
+        }
+    
+        function closeModal(id) {
+            document.getElementById(`modal-edit${id}`).classList.add('hidden');
+            document.getElementById(`modal-delete${id}`).classList.add('hidden');
+        }
+    </script>
 </body>
 </html>

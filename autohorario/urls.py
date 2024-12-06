@@ -30,6 +30,12 @@ urlpatterns = [
     path('turmas', views.turmas, name="turmas"),
     path('vinculos', views.vinculos, name="vinculos"),
     path('atividades', views.atividades, name="atividades"),
+    path('atividades/delete/<int:id_atividade>/', views.delete_atividade, name='delete_atividade'),
+    path('atividades/edit/<int:id_atividade>/', views.edit_atividade, name='edit_atividade'),
+    path('turmas/delete/<int:id_turma>/', views.delete_turma, name='delete_turma'),
+    path('turmas/edit/<int:id_turma>/', views.edit_turma, name='edit_turma'),
+    path('profissionais/delete/<int:id_profissional>/', views.delete_profissional, name='delete_profissional'),
+    path('profissionais/edit/<int:id_profissional>/', views.edit_profissional, name='edit_profissional'),
 ]
 
 if settings.DEBUG:

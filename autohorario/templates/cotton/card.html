@@ -12,11 +12,11 @@ Variáveis:
     </div>
     <div class="flex gap-2">
         <c-card-button
-            href="?edit_id={{cardId}}"
+            abrirModal="openEditModal('{{ cardId }}', '{{urlEdit}}')"
             icon="pencil-square"
         />
         <c-card-button
-            href="?delete_id={{cardId}}"
+            abrirModal="openDeleteModal('{{ cardId }}', '{{urlDelete}}')"
             icon="trash"
             danger
         />

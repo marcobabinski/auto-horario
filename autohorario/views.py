@@ -54,32 +54,6 @@ def profissionais(request):
             profile = Profile.objects.get(user=request.user)
         except Profile.DoesNotExist:
             profile = None 
-    
-    edit_id = request.GET.get('edit_id')
-
-    if edit_id:
-        profissional = get_object_or_404(Profissional, id_profissional=edit_id)
-
-        if request.method == "POST":
-            form = ProfissionalForm(request.POST, instance=profissional)
-            if form.is_valid():
-                form.save()
-                return redirect('profissionais')
-        else:
-            form = ProfissionalForm(instance=profissional)
-        
-        return render(request, "profissionais.html", {'form': form, 'profissional': profissional, 'profile': profile})
-    
-    delete_id = request.GET.get('delete_id')
-
-    if delete_id:
-        profissional = get_object_or_404(Profissional, id_profissional=delete_id)
-
-        if request.method == "POST":
-            profissional.delete()
-            return redirect('profissionais')  
-
-        return render(request, "delete_profissional.html", {'profissional': profissional, 'profile': profile})
 
     if request.GET.get('new'):
         if request.method == "POST":
@@ -93,7 +67,9 @@ def profissionais(request):
         return render(request, "create_profissional.html", {'form': form, 'profile': profile})
 
     profissionais = Profissional.objects.all()
-    return render(request, "profissionais.html", {'profissionais': profissionais, 'profile': profile})
+    form = {profissional.pk: ProfissionalForm(instance=profissional) for profissional in profissionais}
+
+    return render(request, "profissionais.html", {'profissionais': profissionais, 'profile': profile, 'form': form })
 
 def agenda(request):
     profissionais = Profissional.objects.all()
@@ -107,39 +83,6 @@ def turmas(request):
             profile = Profile.objects.get(user=request.user)
         except Profile.DoesNotExist:
             profile = None  # Caso o perfil ainda não tenha sido criado
-    
-    # Verifica se há um parâmetro "edit_id" na requisição.
-    edit_id = request.GET.get('edit_id')
-
-    if edit_id:
-        # Tenta buscar a turma correspondente; se não existir, retorna 404.
-        turma = get_object_or_404(Turma, id_turma=edit_id)
-
-        # Cria um formulário pré-preenchido com os dados da turma.
-        if request.method == "POST":
-            form = TurmaForm(request.POST, instance=turma)
-            if form.is_valid():
-                form.save()
-                return redirect('turmas')  # Redireciona para a página geral de turmas.
-        else:
-            form = TurmaForm(instance=turma)
-        
-        return render(request, "turmas.html", {'form': form, 'turma': turma, 'profile': profile})
-    
-    # Verifica se há um parâmetro "delete_id" na requisição.
-    delete_id = request.GET.get('delete_id')
-
-    if delete_id:
-        # Tenta buscar a turma correspondente; se não existir, retorna 404.
-        turma = get_object_or_404(Turma, id_turma=delete_id)
-
-        # Apaga a turma.
-        if request.method == "POST":
-            turma.delete()
-            return redirect('turmas')  # Redireciona para a página geral de turmas.
-
-        # Renderiza a confirmação de exclusão.
-        return render(request, "delete_turma.html", {'turma': turma, 'profile': profile})
 
     # Verifica se o parâmetro "new" está presente na requisição para criação de uma nova turma.
     if request.GET.get('new'):
@@ -168,32 +111,6 @@ def atividades(request):
             profile = Profile.objects.get(user=request.user)
         except Profile.DoesNotExist:
             profile = None 
-    
-    edit_id = request.GET.get('edit_id')
-
-    if edit_id:
-        atividade = get_object_or_404(Atividade, id_atividade=edit_id)
-
-        if request.method == "POST":
-            form = AtividadeForm(request.POST, instance=atividade)
-            if form.is_valid():
-                form.save()
-                return redirect('atividades')
-        else:
-            form = AtividadeForm(instance=atividade)
-        
-        return render(request, "atividades.html", {'form': form, 'atividade': atividade, 'profile': profile})
-    
-    delete_id = request.GET.get('delete_id')
-
-    if delete_id:
-        atividade = get_object_or_404(Atividade, id_atividade=delete_id)
-
-        if request.method == "POST":
-            atividade.delete()
-            return redirect('atividades')  
-
-        return render(request, "delete_atividade.html", {'atividade': atividade, 'profile': profile})
 
     if request.GET.get('new'):
         if request.method == "POST":
@@ -207,4 +124,62 @@ def atividades(request):
         return render(request, "create_atividade.html", {'form': form, 'profile': profile})
 
     atividades = Atividade.objects.select_related('id_caracteristica').all()
+    
     return render(request, "atividades.html", {'atividades': atividades, 'profile': profile})
+
+def delete_atividade(request, id_atividade):
+    atividade = get_object_or_404(Atividade, id_atividade=id_atividade)
+
+    if request.method == "POST":
+        atividade.delete()
+    
+    return redirect('atividades')
+
+def edit_atividade(request, id_atividade):
+    atividade = get_object_or_404(Atividade, id_atividade=id_atividade)
+
+    if request.method == "POST":
+        form = AtividadeForm(request.POST, instance=atividade)
+        if form.is_valid():
+            form.save()
+            return redirect('atividades')
+    
+    return redirect('atividades')
+
+def delete_turma(request, id_turma):
+    turma = get_object_or_404(Turma, id_turma=id_turma)
+
+    if request.method == "POST":
+        turma.delete()
+    
+    return redirect('turmas')
+
+def edit_turma(request, id_turma):
+    turma = get_object_or_404(Turma, id_turma=id_turma)
+
+    if request.method == "POST":
+        form = TurmaForm(request.POST, instance=turma)
+        if form.is_valid():
+            form.save()
+            return redirect('turmas')
+    
+    return redirect('turmas')
+
+def delete_profissional(request, id_profissional):
+    profissional = get_object_or_404(Profissional, id_profissional=id_profissional)
+
+    if request.method == "POST":
+        profissional.delete()
+    
+    return redirect('profissionais')
+
+def edit_profissional(request, id_profissional):
+    profissional = get_object_or_404(Profissional, id_profissional=id_profissional)
+
+    if request.method == "POST":
+        form = ProfissionalForm(request.POST, instance=profissional)
+        if form.is_valid():
+            form.save()
+            return redirect('profissionais')
+    
+    return redirect('profissionais')

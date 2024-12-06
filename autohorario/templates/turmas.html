@@ -8,6 +8,7 @@
         <c-card
             cardId={{p.pk}}
             title={{p.nome}}
+            url="/turmas/delete/{{p.pk}}/"
             description="Alunos: {{p.qnt_de_alunos}}"
         />
         {% endfor %}

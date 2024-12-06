@@ -7,7 +7,9 @@
         {% for p in atividades %}
         <c-card
             cardId={{p.pk}}
+            tabela={{tabela}}
             title="{{p.nome}} - {{p.carga_horaria}}h/semana"
+            url="/atividades/delete/{{p.pk}}/"
             description="{{p.id_caracteristica.nome}}"
         />
         {% endfor %}
