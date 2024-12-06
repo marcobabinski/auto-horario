@@ -2,18 +2,17 @@
 
 {% block content %}
 {% load static %}
+    {% if messages %}
     <div id="alerts-area" class="absolute top-0 left-1/2 -translate-x-1/2 flex flex-col py-2">
+        {% for m in messages %}
         <c-alert
-                tags="error"
-                title="Oooo"
-                text="everybody was kung fu fighting"
-            />
-        <c-alert
-            tags="success"
-            title="Oooo"
-            text="everybody was kung fu fighting"
+            tags="{{ m.tags }}"
+            title=""
+            text="{{ m.message }}"
         />
+        {% endfor %}
     </div>
+    {% endif %}
     <div class="h-svh w-full bg-background flex">
         <div class="h-svh w-[600px] max-w-[40%] md:block hidden">
             <img src="{% static "images/login-splash.jpeg" %}" alt="" srcset="" class="h-full w-full object-cover">
@@ -58,13 +57,6 @@
                         <c-link href="/" class="text-center">Não possuo conta</c-link>
                     </div>
                 </form>
-                {% if messages %}
-                    {% for m in messages %}
-
-                                    {{ m }}
-
-                    {% endfor %}
-                {% endif %}
             </div>
         </div>
     </div>

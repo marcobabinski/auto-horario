@@ -14,6 +14,24 @@
     <script src="https://unpkg.com/htmx.org@2.0.3" integrity="sha384-0895/pl2MU10Hqc6jd4RvrthNlDiE9U1tWmX7WRESftEDRosgxNsQG/Ze9YMRzHq" crossorigin="anonymous"></script>
 </head>
 
-<body class="bg-background min-h-lvh min-w-full">
+<body class="bg-background min-h-lvh min-w-full" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
     {% block content %}{% endblock %}
+
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+    <script>
+        function openEditModal(id, url) {
+            document.getElementById(`formEdit${id}`).setAttribute('action', url);
+            document.getElementById(`modal-edit${id}`).classList.remove('hidden');
+        }
+    
+        function openDeleteModal(id, url) {
+            document.getElementById(`delete-form${id}`).setAttribute('action', url);
+            document.getElementById(`modal-delete${id}`).classList.remove('hidden');
+        }
+    
+        function closeModal(id) {
+            document.getElementById(`modal-edit${id}`).classList.add('hidden');
+            document.getElementById(`modal-delete${id}`).classList.add('hidden');
+        }
+    </script>
 </body>

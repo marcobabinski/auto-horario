@@ -19,24 +19,25 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from . import views
-
 urlpatterns = [
     path('', views.index, name="index"),
     path('login/', views.fazer_login, name="fazer_login"),
     path('logout/', views.fazer_logout, name='fazer_logout'),
     path('recuperar-senha/', views.recoverPassword, name="recover password"),
-    path('profissionais', views.profissionais, name="profissionais"),
-    path('agenda', views.agenda, name="agenda"),
-    path('turmas', views.turmas, name="turmas"),
-    path('vinculos', views.vinculos, name="vinculos"),
-    path('atividades', views.atividades, name="atividades"),
-    path('atividades/delete/<int:id_atividade>/', views.delete_atividade, name='delete_atividade'),
-    path('atividades/edit/<int:id_atividade>/', views.edit_atividade, name='edit_atividade'),
-    path('turmas/delete/<int:id_turma>/', views.delete_turma, name='delete_turma'),
-    path('turmas/edit/<int:id_turma>/', views.edit_turma, name='edit_turma'),
-    path('profissionais/delete/<int:id_profissional>/', views.delete_profissional, name='delete_profissional'),
-    path('profissionais/edit/<int:id_profissional>/', views.edit_profissional, name='edit_profissional'),
-    path('teste/', views.teste, name="teste")
+    # path('profissionais', views.profissionais, name="profissionais"),
+    # path('agenda', views.agenda, name="agenda"),
+    # path('turmas', views.turmas, name="turmas"),
+    # path('vinculos', views.vinculos, name="vinculos"),
+    # path('atividades', views.atividades, name="atividades"),
+    # path('atividades/delete/<int:id_atividade>/', views.delete_atividade, name='delete_atividade'),
+    # path('atividades/edit/<int:id_atividade>/', views.edit_atividade, name='edit_atividade'),
+    # path('turmas/delete/<int:id_turma>/', views.delete_turma, name='delete_turma'),
+    # path('turmas/edit/<int:id_turma>/', views.edit_turma, name='edit_turma'),
+    # path('profissionais/delete/<int:id_profissional>/', views.delete_profissional, name='delete_profissional'),
+    # path('profissionais/edit/<int:id_profissional>/', views.edit_profissional, name='edit_profissional'),
+    path('teste/', views.teste, name="teste"),
+    path('dashboard/', views.dashboard, name="dashboard"),
+    path('dashboard/<str:screen>/', views.dashboard_load_screen, name="dashboard_load_screen"),
 ]
 
 if settings.DEBUG:

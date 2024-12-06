@@ -9,15 +9,25 @@ from django.utils import timezone
 from .forms import TurmaForm, ProfissionalForm, AtividadeForm
 from .models import Profile 
 
+from django.contrib.auth.decorators import login_required
+
 def index(request):
     if request.user.is_authenticated:
-        return render(request, 'dashboard.html')
+        return redirect(dashboard)
     else:
         return redirect(fazer_login)
 
+@login_required
+def dashboard(request):
+    try:
+        profile = Profile.objects.get(user=request.user)
+    except Profile.DoesNotExist:
+        profile = None 
+    return render(request, 'dashboard.html', {'profile': profile})
+
 def fazer_login(request):
     if request.user.is_authenticated:
-        return HttpResponseRedirect("/agenda")
+        return dashboard(request)
 
     if request.method == 'POST':
         form = FormLogin(request.POST)
@@ -27,7 +37,7 @@ def fazer_login(request):
             user = authenticate(request, username=usuario, password=senha) # retorna None se o usuário não é válido
             if user is not None:
                 login(request, user)
-                return HttpResponseRedirect("/agenda")
+                return dashboard(request)
             else:
                 messages.error(request, "Usuário e/ou senha incorretos. Tente de novo.")
         else:
@@ -41,7 +51,8 @@ def fazer_login(request):
 
 def fazer_logout(request):
     logout(request)
-    return HttpResponseRedirect("/")
+    messages.info(request, "Deslogado com sucesso")
+    return index(request)
 
 def recoverPassword(request):
     return render(request, "password-recovery.html")
@@ -189,4 +200,21 @@ def teste(request):
         print("POOOOST")
     else:
         print("ÃAAAAAN")
-    return HttpResponse("a")
+    return HttpResponse("<input>")
+
+dashboard_views = {
+    "agenda": agenda,
+    "profissionais": profissionais,
+    "turmas": turmas,
+    "atividades": atividades,
+    "vinculos": vinculos
+}
+
+def dashboard_load_screen(request, screen):
+    if request.method == "POST":
+        if (dashboard_views[screen]):
+            return_screen = dashboard_views[screen]
+    return return_screen(request)
+
+# def dashboard_load_screen(request, screen):
+#     return HttpResponse(screen)
