@@ -14,11 +14,14 @@
     {% endfor %}
 </div>
 
-{% for p in profissionais %}
+{% comment %} {% for p in profissionais %}
     {% with form|get:p.pk as forms %}
         {% include 'components/modal_crud.html' with form=forms id=p.pk %}
     {% endwith %}  
-{% endfor %}
+{% endfor %} {% endcomment %}
+
+{% comment %} {% include 'components/modal_crud.html' %} {% endcomment %}
+
 
 
 <a href="?new=true">

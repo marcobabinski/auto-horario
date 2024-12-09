@@ -5,6 +5,7 @@ const defaultTheme = require('tailwindcss/defaultTheme')
 module.exports = {
   content: [
     './autohorario/templates/**/*.html',
+    './node_modules/flowbite/**/*.js',
     // Add paths to other apps if necessary
   ],
   theme: {
@@ -57,5 +58,7 @@ module.exports = {
       }
     },
   },
-  plugins: [],
+  plugins: [
+    require('flowbite/plugin')
+  ]
 };
