@@ -19,8 +19,44 @@
 </form>
 {% endif %}
 
+<<<<<<< HEAD
 <a href="?new=true">
     <div class="rounded-md bg-tertiary-500 text-white fixed bottom-4 right-4 cursor-pointer p-2">
         {% heroicon_solid "plus" size=40 %}
     </div>
 </a>
+=======
+{% load custom_filters %}
+
+{% block tela %}
+    <c-title underline>Turmas</c-title>
+
+    
+    <div class="grid gap-4 py-4 grid-cols-1 md:grid-cols-2">
+        {% for t in turmas %}
+            <c-card
+                cardId={{t.pk}}
+                title={{t.nome}}
+                urlDelete="/turmas/delete/{{t.pk}}/"
+                urlEdit="/turmas/edit/{{t.pk}}/"
+                description="Quantidade de alunos: {{t.qnt_de_alunos}}"
+            />
+        {% endfor %}
+    </div>
+
+    {% comment %} {% for t in turmas %}
+        {% with form|get:t.pk as forms %}
+            {% include 'components/modal_crud.html' with form=forms id=t.pk %}
+        {% endwith %}  
+    {% endfor %} {% endcomment %}
+    
+
+    <a href="?new=true">
+        <div class="rounded-md bg-tertiary-500 text-white fixed bottom-4 right-4 cursor-pointer p-2">
+            {% heroicon_solid "plus" size=40 %}
+        </div>
+    </a>
+    
+    
+{% endblock tela %}
+>>>>>>> apresentacao

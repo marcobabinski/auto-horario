@@ -29,10 +29,11 @@ class ProfissionalForm(forms.ModelForm):
     
     class Meta:
         model = Profissional
-        fields = ['nome', 'endereco', 'id_atividade']
+        fields = ['nome', 'funcao', 'endereco', 'id_atividade']
         labels = {
             'nome': 'Nome do Profissional',
             'endereco': 'Endereço',
+            'funcao': 'Função',
         }
 
 class AtividadeForm(forms.ModelForm):

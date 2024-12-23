@@ -11,17 +11,21 @@ Variáveis
     <a hx-post="{% url 'dashboard_load_screen' screen=href %}" hx-target="#content"
     class="flex items-center p-2 rounded-md group 
     {{ class }}
-    {% if active %}
+    {% if sidebar == label.lower %}
         bg-white text-tertiary-400 font-semibold hover:bg-white hover:text-tertiary-400
     {% else %}
         text-white hover:bg-tertiary-300
     {% endif %} 
     ">
-        {% if active %}
-            {% heroicon_solid icon %}
+        {% if sidebar == label.lower %}
+            {% heroicon_solid icon size=23 %}
         {% else %}
-            {% heroicon_outline icon %}
+            {% heroicon_outline icon size=24 %}
         {% endif %}
        <span class="ms-3">{{ label | default:"Sidebar" }}</span>
     </a>
 </li>
+
+<style>
+
+</style>

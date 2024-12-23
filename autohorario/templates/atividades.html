@@ -1,4 +1,4 @@
-<c-title underline>Atividades</c-title>
+{% comment %} <c-title underline>Atividades</c-title>
 {% if not atividade %}
 <div class="grid gap-4 py-4 grid-cols-2">
     {% for p in atividades %}
@@ -18,10 +18,26 @@
     <button type="submit">Salvar</button>
     <a href="{% url 'atividades' %}">Cancelar</a>
 </form>
-{% endif %}
+{% endif %} {% endcomment %}
 
-<a href="?new=true">
+{% comment %} <a href="?new=true">
     <div class="rounded-md bg-tertiary-500 text-white fixed bottom-4 right-4 cursor-pointer p-2">
-        {% heroicon_solid "plus" size=40 %}
+        {% heroicon_solid "plus" size=40 %} {% endcomment %}
+{% block screen %}
+    <c-title underline>Atividades</c-title>
+    {% if not atividade %}
+    <div class="grid gap-4 py-4 grid-cols-2">
+        {% for p in atividades %}
+        <c-card
+            cardId={{p.pk}}
+            tabela={{tabela}}
+            title="{{p.nome}}"
+            alt="{{p.carga_horaria}}h/semana"
+            url="/atividades/delete/{{p.pk}}/"
+            description="{{p.id_caracteristica.nome}}"
+        />
+        {% endfor %}
     </div>
-</a>
+    
+{% endblock screen %}
+{% comment %} </a> {% endcomment %}
