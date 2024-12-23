@@ -2,26 +2,25 @@
 
 {% block content %}
 {% load static %}
-    <div id="alerts-area" class="absolute top-0 left-1/2 -translate-x-1/2 flex flex-col py-2">
-        <c-alert
-                tags="error"
-                title="Oooo"
-                text="everybody was kung fu fighting"
-            />
-        <c-alert
-            tags="success"
-            title="Oooo"
-            text="everybody was kung fu fighting"
-        />
-    </div>
+{% if messages %}
+<div id="alerts-area" class="absolute top-0 left-1/2 -translate-x-1/2 flex flex-col py-2">
+    {% for m in messages %}
+    <c-alert
+           tags="{{ m.tags }}"
+           title=""
+           text="{{ m.message }}"
+    />
+    {% endfor %}
+</div>
+{% endif %}
     <div class="h-svh w-full bg-background flex">
         <div class="h-svh w-[600px] max-w-[40%] md:block hidden">
             <img src="{% static "images/login-splash.jpeg" %}" alt="" srcset="" class="h-full w-full object-cover">
         </div>
         <div class="w-full flex justify-center items-center">
             
-            <div id="login-form" class="w-[400px] flex flex-col gap-2 text-start">
-                <form action="/login/" method="POST">
+            <div id="login-form" class="w-[400px] flex flex-col gap-2 p-4 text-start">
+                <form action="{% url "fazer_login" %}" method="POST">
                     {% csrf_token %}
                     <div>
                         <c-title>Login</c-title>
@@ -44,27 +43,20 @@
                             max="20"
                         />
                     </div>
-                    <div class="flex items-center mt-2 mb-4 text-sm text-center justify-between">
-                        <div class="cursor-pointer">
+                    <div class="flex items-center mt-2 mb-4 text-sm text-center justify-end">
+                        {% comment %} <div class="cursor-pointer">
                             <input id="default-checkbox" type="checkbox" value="" class="w-4 h-4 text-secondary bg-white border-border rounded focus:ring-tertiary focus:ring-2 cursor-pointer">
                             <label for="default-checkbox" class="ms-2 text-sm font-medium text-border cursor-pointer">Lembrar senha</label>
-                        </div>
+                        </div> {% endcomment %}
                         
-                        <c-link href="/recuperar-senha">Esqueci minha senha</c-link>
+                        <c-link href="{% url "recover_password" %}">Esqueci minha senha</c-link>
                     </div>
 
                     <div class="flex flex-col">
                         <c-form-button type="submit" color="secondary">Entrar</c-button>
-                        <c-link href="/" class="text-center">Não possuo conta</c-link>
+                        <c-link href="{% url "recover_password" %}" class="text-center">Não possuo conta</c-link>
                     </div>
                 </form>
-                {% if messages %}
-                    {% for m in messages %}
-
-                                    {{ m }}
-
-                    {% endfor %}
-                {% endif %}
             </div>
         </div>
     </div>

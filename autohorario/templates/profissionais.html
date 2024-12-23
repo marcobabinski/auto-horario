@@ -6,14 +6,14 @@
     <c-title underline>Profissionais</c-title>
 
     
-    <div class="grid gap-4 py-4 grid-cols-2">
+    <div class="grid gap-4 py-4 grid-cols-1 md:grid-cols-2">
         {% for p in profissionais %}
             <c-card
                 cardId={{p.pk}}
                 title={{p.nome}}
                 urlDelete="/profissionais/delete/{{p.pk}}/"
                 urlEdit="/profissionais/edit/{{p.pk}}/"
-                description="{{p.endereco}}"
+                description="{{p.funcao}}"
             />
         {% endfor %}
     </div>

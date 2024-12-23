@@ -24,7 +24,7 @@ urlpatterns = [
     path('', views.index, name="index"),
     path('login/', views.fazer_login, name="fazer_login"),
     path('logout/', views.fazer_logout, name='fazer_logout'),
-    path('recuperar-senha/', views.recoverPassword, name="recover password"),
+    path('recuperar-senha/', views.recoverPassword, name="recover_password"),
     path('profissionais', views.profissionais, name="profissionais"),
     path('agenda', views.agenda, name="agenda"),
     path('turmas', views.turmas, name="turmas"),
@@ -36,7 +36,8 @@ urlpatterns = [
     path('turmas/edit/<int:id_turma>/', views.edit_turma, name='edit_turma'),
     path('profissionais/delete/<int:id_profissional>/', views.delete_profissional, name='delete_profissional'),
     path('profissionais/edit/<int:id_profissional>/', views.edit_profissional, name='edit_profissional'),
-    path('teste/', views.teste, name="teste")
+    path('teste/', views.teste, name="teste"),
+    path('export/', views.export, name="export")
 ]
 
 if settings.DEBUG:
