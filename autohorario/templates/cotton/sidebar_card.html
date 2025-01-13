@@ -8,7 +8,7 @@ Variáveis
 -->
 
 <li class="cursor-pointer">
-    <a hx-post="{% url 'dashboard_load_screen' screen=href %}" hx-target="#content"
+    <a href={{href}}
     class="flex items-center p-2 rounded-md group 
     {{ class }}
     {% if sidebar == label.lower %}
