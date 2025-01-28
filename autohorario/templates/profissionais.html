@@ -1,50 +1,33 @@
 {% extends "dashboard.html" %}
 
 {% load custom_filters %}
-{% comment %} <c-title underline>Profissionais</c-title> {% endcomment %}
 
 {% block screen %}
     <c-title underline>Profissionais</c-title>
 
     
     <div class="grid gap-4 py-4 grid-cols-1 md:grid-cols-2">
-        {% for p in profissionais %}
-            <c-card
-                cardId={{p.pk}}
-                title={{p.nome}}
-                urlDelete="/profissionais/delete/{{p.pk}}/"
-                urlEdit="/profissionais/edit/{{p.pk}}/"
-                description="{{p.funcao}}"
-            />
-        {% endfor %}
+        {% if profissionais %}
+            {% for p in profissionais %}
+                <c-card
+                    cardId={{p.pk}}
+                    title={{p.nome}}
+                    urlDelete="{% url "delete_profissional" id_profissional=p.pk %}"
+                    urlEdit="{% url "edit_profissional" id_profissional=p.pk %}"
+                    description="{{p.funcao}}"
+                />
+            {% endfor %}
+            <c-card-new href="{% url "new_profissional" %}"/>
+        {% else %}
+        <i>Nenhum profissional encontrado.</i>
+        {% endif %}
     </div>
+
+    
+    <a href="{% url "new_profissional" %}">
+        <div class="rounded-md bg-tertiary-500 text-white fixed bottom-4 right-4 cursor-pointer p-2">
+            {% heroicon_solid "plus" size=40 %}
+        </div>
+    </a>
 
 {% endblock screen %}
-
-{% comment %} <div class="grid gap-4 py-4 grid-cols-2">
-    {% for p in profissionais %}
-        <c-card
-            cardId={{p.pk}}
-            title={{p.nome}}
-            urlDelete="/profissionais/delete/{{p.pk}}/"
-            urlEdit="/profissionais/edit/{{p.pk}}/"
-            description="{{p.endereco}}"
-        />
-    {% endfor %}
-</div> {% endcomment %}
-
-{% comment %} {% for p in profissionais %}
-    {% with form|get:p.pk as forms %}
-        {% include 'components/modal_crud.html' with form=forms id=p.pk %}
-    {% endwith %}  
-{% endfor %} {% endcomment %}
-
-{% comment %} {% include 'components/modal_crud.html' %} {% endcomment %}
-
-
-
-<a href="?new=true">
-    <div class="rounded-md bg-tertiary-500 text-white fixed bottom-4 right-4 cursor-pointer p-2">
-        {% heroicon_solid "plus" size=40 %}
-    </div>
-</a>

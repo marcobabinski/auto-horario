@@ -1,0 +1,11 @@
+{% extends "dashboard.html" %}
+
+{% block screen %}
+    <c-title underline>Editar Atividade</c-title>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded">Salvar</button>
+        <a href="{% url 'atividades' %}" class="bg-gray-300 px-4 py-2 rounded">Cancelar</a>
+    </form>
+{% endblock screen %}

@@ -28,7 +28,7 @@ def dashboard(request):
 
 def fazer_login(request):
     if request.user.is_authenticated:
-        return dashboard(request)
+        return agenda(request)
 
     if request.method == 'POST':
         form = FormLogin(request.POST)
@@ -38,7 +38,7 @@ def fazer_login(request):
             user = authenticate(request, username=usuario, password=senha) # retorna None se o usuário não é válido
             if user is not None:
                 login(request, user)
-                return dashboard(request)
+                return agenda(request)
             else:
                 messages.error(request, "Usuário e/ou senha incorretos. Tente de novo.")
         else:
@@ -68,16 +68,16 @@ def profissionais(request):
         except Profile.DoesNotExist:
             profile = None 
 
-    if request.GET.get('new'):
-        if request.method == "POST":
-            form = ProfissionalForm(request.POST)
-            if form.is_valid():
-                form.save()
-                return redirect('profissionais') 
-        else:
-            form = ProfissionalForm()
+    # if request.GET.get('new'):
+    #     if request.method == "POST":
+    #         form = ProfissionalForm(request.POST)
+    #         if form.is_valid():
+    #             form.save()
+    #             return redirect('profissionais') 
+    #     else:
+    #         form = ProfissionalForm()
 
-        return render(request, "create_profissional.html", {'form': form, 'profile': profile})
+        # return render(request, "create_profissional.html", {'form': form, 'profile': profile})
 
     profissionais = Profissional.objects.all().order_by("nome")
     form = {profissional.pk: ProfissionalForm(instance=profissional) for profissional in profissionais}
@@ -154,74 +154,200 @@ def atividades(request):
     return render(request, "atividades.html", {'atividades': atividades, 'profile': profile, 'sidebar': 'atividades'})
 
 @login_required
-def delete_atividade(request, id_atividade):
-    atividade = get_object_or_404(Atividade, id_atividade=id_atividade)
-
-    if request.method == "POST":
-        atividade.delete()
-    
-    return redirect('atividades')
-
-@login_required
-def edit_atividade(request, id_atividade):
-    atividade = get_object_or_404(Atividade, id_atividade=id_atividade)
-
-    if request.method == "POST":
-        form = AtividadeForm(request.POST, instance=atividade)
-        if form.is_valid():
-            form.save()
-            return redirect('atividades')
-    
-    return redirect('atividades')
-
-@login_required
 def delete_turma(request, id_turma):
-    turma = get_object_or_404(Turma, id_turma=id_turma)
+    try:
+        profile = Profile.objects.get(user=request.user)
+    except Profile.DoesNotExist:
+        profile = None
+
+    turma = get_object_or_404(Turma, pk=id_turma)
 
     if request.method == "POST":
         turma.delete()
-    
-    return redirect('turmas')
+        return redirect('turmas')
+
+    return render(request, "turma_delete.html", {
+        "turma": turma,
+        "profile": profile,
+        'sidebar': 'turmas'
+    })
+
 
 @login_required
 def edit_turma(request, id_turma):
-    turma = get_object_or_404(Turma, id_turma=id_turma)
+    try:
+        profile = Profile.objects.get(user=request.user)
+    except Profile.DoesNotExist:
+        profile = None
+
+    turma = get_object_or_404(Turma, pk=id_turma)
 
     if request.method == "POST":
         form = TurmaForm(request.POST, instance=turma)
         if form.is_valid():
             form.save()
             return redirect('turmas')
-    
-    return redirect('turmas')
+    else:
+        form = TurmaForm(instance=turma)
+
+    return render(request, "turma_create.html", {
+        "form": form,
+        "turma": turma,
+        "profile": profile,
+        'sidebar': 'turmas'
+    })
+
+
+@login_required
+def new_turma(request):
+    try:
+        profile = Profile.objects.get(user=request.user)
+    except Profile.DoesNotExist:
+        profile = None
+
+    if request.method == "POST":
+        form = TurmaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('turmas')
+    else:
+        form = TurmaForm()
+
+    return render(request, "turma_create.html", {
+        "form": form,
+        "profile": profile,
+        'sidebar': 'turmas'
+    })
+
+@login_required
+def delete_atividade(request, id_atividade):
+    try:
+        profile = Profile.objects.get(user=request.user)
+    except Profile.DoesNotExist:
+        profile = None
+
+    atividade = get_object_or_404(Atividade, pk=id_atividade)
+
+    if request.method == "POST":
+        atividade.delete()
+        return redirect('atividades')
+
+    return render(request, "atividade_delete.html", {
+        "atividade": atividade,
+        "profile": profile,
+        'sidebar': 'atividades'
+    })
+
+
+@login_required
+def edit_atividade(request, id_atividade):
+    try:
+        profile = Profile.objects.get(user=request.user)
+    except Profile.DoesNotExist:
+        profile = None
+
+    atividade = get_object_or_404(Atividade, pk=id_atividade)
+
+    if request.method == "POST":
+        form = AtividadeForm(request.POST, instance=atividade)
+        if form.is_valid():
+            form.save()
+            return redirect('atividades')
+    else:
+        form = AtividadeForm(instance=atividade)
+
+    return render(request, "atividade_create.html", {
+        "form": form,
+        "atividade": atividade,
+        "profile": profile,
+        'sidebar': 'atividades'
+    })
+
+
+@login_required
+def new_atividade(request):
+    try:
+        profile = Profile.objects.get(user=request.user)
+    except Profile.DoesNotExist:
+        profile = None
+
+    if request.method == "POST":
+        form = AtividadeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('atividades')
+    else:
+        form = AtividadeForm()
+
+    return render(request, "atividade_create.html", {
+        "form": form,
+        "profile": profile,
+        'sidebar': 'atividades'
+    })
+
 
 @login_required
 def delete_profissional(request, id_profissional):
+    if request.user.is_authenticated:
+        try:
+            profile = Profile.objects.get(user=request.user)
+        except Profile.DoesNotExist:
+            profile = None 
+
     profissional = get_object_or_404(Profissional, id_profissional=id_profissional)
 
     if request.method == "POST":
         profissional.delete()
+        return redirect('profissionais')
     
-    return redirect('profissionais')
+    return render(request, "profissional_delete.html", { "profissional": profissional, "profile": profile, 'sidebar': 'profissionais' })
 
 @login_required
 def edit_profissional(request, id_profissional):
-    profissional = get_object_or_404(Profissional, id_profissional=id_profissional)
+    if request.user.is_authenticated:
+        try:
+            profile = Profile.objects.get(user=request.user)
+        except Profile.DoesNotExist:
+            profile = None 
+
+    profissional = get_object_or_404(Profissional, pk=id_profissional)
 
     if request.method == "POST":
         form = ProfissionalForm(request.POST, instance=profissional)
         if form.is_valid():
             form.save()
             return redirect('profissionais')
-    
-    return redirect('profissionais')
-
-def teste(request):
-    if request.method == "POST":
-        print("POOOOST")
     else:
-        print("ÃAAAAAN")
-    return HttpResponse("a")
+        form = ProfissionalForm(instance=profissional)
+
+    return render(request, "profissional_create.html", { 
+        "form": form, 
+        "profissional": profissional, 
+        "profile": profile, 
+        'sidebar': 'profissionais' 
+    })
+
+def new_profissional(request):
+    if request.user.is_authenticated:
+        try:
+            profile = Profile.objects.get(user=request.user)
+        except Profile.DoesNotExist:
+            profile = None 
+
+    if request.method == "POST":
+        form = ProfissionalForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('profissionais')
+    else:
+        form = ProfissionalForm()
+
+    return render(request, "profissional_create.html", { 
+        "form": form, 
+        "profile": profile, 
+        'sidebar': 'profissionais' 
+    })
+
 
 @login_required
 def export(request):

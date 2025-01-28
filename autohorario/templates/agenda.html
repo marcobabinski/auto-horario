@@ -4,7 +4,83 @@
 
 {% block screen %}
     <c-title underline>Agenda</c-title>
-    <div class="mt-4 text-slate-700 italic">
-        Posteriormente a agenda será exibida aqui
+
+    <div class="grid grid-cols-[auto_repeat(5,1fr)] grid-rows-[auto_repeat(5,1fr)] gap-0 gap-x-1 rounded-lg overflow-hidden my-6 text-center text-xs">
+        <!-- Cabeçalho -->
+        <div></div>
+        <div class="bg-red-400 p-2 text-sm rounded-t-md"><b>Segunda-feira</b></div>
+        <div class="bg-orange-400 p-2 text-sm border-l border-red-300 rounded-t-md"><b>Terça-feira</b></div>
+        <div class="bg-yellow-400 p-2 text-sm border-l border-red-300 rounded-t-md"><b>Quarta-feira</b></div>
+        <div class="bg-green-400 p-2 text-sm border-l border-red-300 rounded-t-md"><b>Quinta-feira</b></div>
+        <div class="bg-blue-400 p-2 text-sm border-l border-red-300 rounded-t-md"><b>Sexta-feira</b></div>
+
+        <!-- Linha 1 -->
+        <div class="bg-none p-2 flex items-center border-b border-slate-500 border-dashed justify-end">8:00 - 9:00</div>
+        <div class="bg-red-200 p-2 border-b border-red-300 flex flex-col items-center justify-center">
+            <p><b>EJA I</b></p>
+            <p>Leni da Silva e Cleiton Rodrigues</p>
+        </div>
+        <div class="bg-orange-200 p-2 border-b border-orange-300  flex flex-col items-center justify-center">Professor</div>
+        <div class="bg-yellow-200 p-2 border-b border-yellow-300  flex flex-col items-center justify-center">Professor</div>
+        <div class="bg-green-200 p-2 border-b border-green-300  flex flex-col items-center justify-center">Professor</div>
+        <div class="bg-blue-200 p-2 border-b border-blue-300  flex flex-col items-center justify-center">Professor</div>
+
+        <!-- Linha 2 -->
+        <div class="bg-none p-2 flex items-center border-b border-slate-500 border-dashed justify-end">9:00 - 10:00</div>
+        <div class="bg-red-200 p-2 border-red-300  flex flex-col items-center justify-center">Professor</div>
+        <div class="bg-orange-200 p-2  border-orange-300  flex flex-col items-center justify-center">Professor</div>
+        <div class="bg-yellow-200 p-2  border-yellow-300  flex flex-col items-center justify-center">Professor</div>
+        <div class="bg-green-200 p-2   border-green-300  flex flex-col items-center justify-center">Professor</div>
+        <div class="bg-blue-200 p-2    border-blue-300  flex flex-col items-center justify-center">Professor</div>
+
+        <!-- Linha 3 (Intervalo) -->
+        <div class="bg-none p-2 flex items-center border-b border-slate-500 border-dashed justify-end">10:00 - 10:30</div>
+        <div class="bg-red-200 p-2 opacity-50 border-b border-red-300  flex flex-col items-center justify-center">Intervalo</div>
+        <div class="bg-orange-200 p-2 opacity-50 border-b border-orange-300  flex flex-col items-center justify-center">Intervalo</div>
+        <div class="bg-yellow-200 p-2 opacity-50 border-b border-yellow-300  flex flex-col items-center justify-center">Intervalo</div>
+        <div class="bg-green-200 p-2 opacity-50 border-b border-green-300  flex flex-col items-center justify-center">Intervalo</div>
+        <div class="bg-blue-200 p-2 opacity-50 border-b border-blue-300  flex flex-col items-center justify-center">Intervalo</div>
+
+        <!-- Linha 4 -->
+        <div class="bg-none p-2 flex items-center border-b border-slate-500 border-dashed justify-end">10:30 - 11:30</div>
+        <div class="bg-red-200 p-2 border-b border-red-300  flex flex-col items-center justify-center">Professor fulano da silvar</div>
+        <div class="bg-orange-200 p-2 border-b border-orange-300  flex flex-col items-center justify-center">Professor</div>
+        <div class="bg-yellow-200 p-2 border-b border-yellow-300  flex flex-col items-center justify-center">Professor</div>
+        <div class="bg-green-200 p-2 border-b border-green-300  flex flex-col items-center justify-center">Professor</div>
+        <div class="bg-blue-200 p-2 border-b border-blue-300  flex flex-col items-center justify-center">Professor</div>
+
+        <!-- Linha 5 -->
+        <div class="bg-none p-2 flex items-center justify-end">11:30 - 12:30</div>
+        <div class="bg-red-200 p-2  flex flex-col items-center justify-center rounded-b-md">Professor</div>
+        <div class="bg-orange-200 p-2 border-orange-300  flex flex-col items-center justify-center rounded-b-md">Professor</div>
+        <div class="bg-yellow-200 p-2 border-yellow-300  flex flex-col items-center justify-center rounded-b-md">Professor</div>
+        <div class="bg-green-200 p-2 border-green-300  flex flex-col items-center justify-center rounded-b-md">Professor</div>
+        <div class="bg-blue-200 p-2  flex flex-col items-center justify-center   rounded-b-md">Professor</div>
     </div>
+
+
+    <div data-dial-init class="fixed end-6 bottom-6 group">
+
+        <div id="speed-dial-menu-square" class="flex flex-col items-center hidden mb-4 space-y-2">
+            <c-speed-dial-button 
+                icon="printer"
+                id="exportar"
+                name="Exportar"
+                href="https://google.com"
+            />
+            <c-speed-dial-button 
+                icon="document-magnifying-glass"
+                id="gerar"
+                name="Gerar"
+                href="https://google.com.br"
+            />
+        </div>
+        <button type="button" data-dial-toggle="speed-dial-menu-square" aria-controls="speed-dial-menu-square" aria-expanded="false" class="flex items-center justify-center text-white bg-blue-700 rounded-lg w-14 h-14 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:focus:ring-blue-800">
+            <svg class="w-5 h-5 transition-transform group-hover:rotate-45" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+            </svg>
+            <span class="sr-only">Open actions menu</span>
+        </button>
+    </div>
+
 {% endblock screen %}

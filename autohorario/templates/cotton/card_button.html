@@ -1,12 +1,14 @@
-<button data-modal-target="default-modal" data-modal-toggle="default-modal" 
-   class="w-8 h-8 border rounded-md flex justify-center items-center transition-colors text-black
-   hover:bg-white
-    {% if not danger %}
-      hover:text-tertiary-400 bg-tertiary-400 border-tertiary-700
-    {% else %}
-        hover:text-red-500 bg-primary-400 border-primary-700
-    {% endif %}
-   "
->
-    {% heroicon_outline icon %}
-</button>
+<a href="{{ action }}">
+  <button
+     class="w-8 h-8 border rounded-md flex justify-center items-center transition-colors text-black
+     hover:bg-white
+      {% if not danger %}
+        hover:text-tertiary-400 bg-tertiary-400 border-tertiary-700
+      {% else %}
+          hover:text-red-500 bg-primary-400 border-primary-700
+      {% endif %}
+     "
+  >
+      {% heroicon_outline icon %}
+  </button>
+</a>

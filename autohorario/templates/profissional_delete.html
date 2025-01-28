@@ -1,0 +1,18 @@
+{% extends "dashboard.html" %}
+
+{% block screen %}
+    <c-title underline>Apagar profissional</c-title>
+
+    <p class="mt-4">Deseja realmente apagar o profissional {{ profissional.nome }}?</p>
+    <p class="mb-4">Essa ação é <b>irreversível</b> e pode causar perda de dados com dados relacionados a ele.</p> 
+
+    <form action="{% url "delete_profissional" id_profissional=profissional.pk %}" method="POST">
+        {% csrf_token %}
+        <c-form-button color="danger" type="submit" >Sim, apagar permanentemente</c-form-button>
+        <a href="{% url "profissionais" %}">
+            <c-form-button color="neutral">Cancelar e voltar à lista</c-form-button>
+        </a>
+    </form>
+    
+
+{% endblock screen %}

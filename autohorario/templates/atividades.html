@@ -3,18 +3,29 @@
 {% block screen %}
     <c-title underline>Atividades</c-title>
     {% if not atividade %}
-    <div class="grid gap-4 py-4 grid-cols-2">
-        {% for p in atividades %}
-        <c-card
-            cardId={{p.pk}}
-            tabela={{tabela}}
-            title="{{p.nome}}"
-            alt="{{p.carga_horaria}}h/semana"
-            url="/atividades/delete/{{p.pk}}/"
-            description="{{p.id_caracteristica.nome}}"
-        />
-        {% endfor %}
+    <div class="grid gap-4 py-4 grid-cols-1 md:grid-cols-2">
+        {% if atividades %}
+            {% for a in atividades %}
+            <c-card
+                cardId={{a.pk}}
+                title={{a.nome}}
+                urlDelete="{% url "delete_atividade" id_atividade=a.pk %}"
+                urlEdit="{% url "edit_atividade" id_atividade=a.pk %}"
+                alt="{{a.carga_horaria}} h/semana"
+                description="{{a.id_caracteristica.nome}}"
+            />
+            {% endfor %}
+            <c-card-new href="{% url "new_atividade" %}"/>
+        {% else %}
+        <i>Nenhuma atividade encontrada.</i>
+        {% endif %}
     </div>
     {% endif %}
+
+    <a href="{% url "new_atividade" %}">
+        <div class="rounded-md bg-tertiary-500 text-white fixed bottom-4 right-4 cursor-pointer p-2">
+            {% heroicon_solid "plus" size=40 %}
+        </div>
+    </a>
 {% endblock screen %}
 {% comment %} </a> {% endcomment %}

@@ -1,0 +1,17 @@
+<!--
+icon
+id
+name
+href
+-->
+
+<a href="{{href}}">
+    <button type="button" data-tooltip-target="{{id}}" data-tooltip-placement="left" class="flex justify-center items-center w-[52px] h-[52px] text-gray-500 hover:text-gray-900 bg-white rounded-lg border border-gray-200  hover:bg-gray-50  focus:ring-4 focus:ring-gray-300 focus:outline-none">
+        {% heroicon_solid icon size=24 %}
+        <span class="sr-only">{{name|default:"Ação"}}</span>
+    </button>
+</a>
+<div id="{{id}}" role="tooltip" class="absolute z-10 invisible inline-block w-auto px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip ">
+    {{name|default:"Ação"}}
+    <div class="tooltip-arrow" data-popper-arrow></div>
+</div>

@@ -6,10 +6,12 @@ Variáveis
 
 - class: extensão de classe
 - slot: texto do botão
+- submit: booleano se deve ser do tipo submit ou não
 -->
 
-<input type="submit" 
-value={{slot}}
+<input 
+{{ attrs }}
+value="{{slot}}"
 class="
 {% if color == 'primary' %}
 text-black bg-primary-400 hover:bg-primary-500 focus:ring-yellow-200
@@ -17,6 +19,10 @@ text-black bg-primary-400 hover:bg-primary-500 focus:ring-yellow-200
 text-black bg-secondary-400 hover:bg-secondary-500 focus:ring-green-200
 {% elif color == 'tertiary' %}
 text-white bg-tertiary-400 hover:bg-tertiary-500 focus:ring-blue-200
+{% elif color == 'danger' %}
+text-white bg-red-500 hover:bg-red-700 focus:ring-red-200
+{% elif color == 'neutral' %}
+text-black bg-slate-300 hover:bg-slate-400 focus:ring-slate-200
 {% endif %}
 {% if rounded %}
 rounded-full

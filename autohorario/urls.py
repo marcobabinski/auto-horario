@@ -29,13 +29,20 @@ urlpatterns = [
     path('turmas', views.turmas, name="turmas"),
     path('vinculos', views.vinculos, name="vinculos"),
     path('atividades', views.atividades, name="atividades"),
-    path('atividades/delete/<int:id_atividade>/', views.delete_atividade, name='delete_atividade'),
-    path('atividades/edit/<int:id_atividade>/', views.edit_atividade, name='edit_atividade'),
-    path('turmas/delete/<int:id_turma>/', views.delete_turma, name='delete_turma'),
-    path('turmas/edit/<int:id_turma>/', views.edit_turma, name='edit_turma'),
-    path('profissionais/delete/<int:id_profissional>/', views.delete_profissional, name='delete_profissional'),
-    path('profissionais/edit/<int:id_profissional>/', views.edit_profissional, name='edit_profissional'),
-    path('teste/', views.teste, name="teste"),
+
+    path('atividades/apagar/<int:id_atividade>/', views.delete_atividade, name='delete_atividade'),
+    path('atividades/editar/<int:id_atividade>/', views.edit_atividade, name='edit_atividade'),
+    path('atividades/edit/', views.new_atividade, name='new_atividade'),
+
+    path('turmas/apagar/<int:id_turma>/', views.delete_turma, name='delete_turma'),
+    path('turmas/editar/<int:id_turma>/', views.edit_turma, name='edit_turma'),
+    path('turmas/novo/', views.new_turma, name='new_turma'),
+
+    path('profissionais/apagar/<int:id_profissional>/', views.delete_profissional, name='delete_profissional'),
+    path('profissionais/editar/<int:id_profissional>/', views.edit_profissional, name='edit_profissional'),
+    path('profissionais/novo/', views.new_profissional, name='new_profissional'),
+
+    # path('teste/', views.teste, name="teste"),
     path('export/', views.export, name="export")
 ]
 

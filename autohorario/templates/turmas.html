@@ -7,15 +7,20 @@
 
     
     <div class="grid gap-4 py-4 grid-cols-1 md:grid-cols-2">
-        {% for t in turmas %}
-            <c-card
-                cardId={{t.pk}}
-                title={{t.nome}}
-                urlDelete="/turmas/delete/{{t.pk}}/"
-                urlEdit="/turmas/edit/{{t.pk}}/"
-                description="Quantidade de alunos: {{t.qnt_de_alunos}}"
-            />
-        {% endfor %}
+        {% if turmas %}
+            {% for t in turmas %}
+                <c-card
+                    cardId={{t.pk}}
+                    title={{t.nome}}
+                    urlDelete="{% url "delete_turma" id_turma=t.pk %}"
+                    urlEdit="{% url "edit_turma" id_turma=t.pk %}"
+                    description="Quantidade de alunos: {{t.qnt_de_alunos}} alunos"
+                />
+            {% endfor %}
+            <c-card-new href="{% url "new_turma" %}"/>
+        {% else %}
+        <i>Nenhuma turma encontrada.</i>
+        {% endif %}
     </div>
 
     {% comment %} {% for t in turmas %}
@@ -25,7 +30,7 @@
     {% endfor %} {% endcomment %}
     
 
-    <a href="?new=true">
+    <a href="{% url "new_turma" %}">
         <div class="rounded-md bg-tertiary-500 text-white fixed bottom-4 right-4 cursor-pointer p-2">
             {% heroicon_solid "plus" size=40 %}
         </div>

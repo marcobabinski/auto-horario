@@ -1,0 +1,16 @@
+{% extends "dashboard.html" %}
+
+{% block screen %}
+    <c-title underline>Apagar atividade</c-title>
+
+    <p class="mt-4">Deseja realmente apagar a atividade {{ atividade.nome }}?</p>
+    <p class="mb-4">Essa ação é <b>irreversível</b> e pode causar perda de dados relacionados.</p> 
+
+    <form action="{% url "delete_atividade" id_atividade=atividade.pk %}" method="POST">
+        {% csrf_token %}
+        <c-form-button color="danger" type="submit">Sim, apagar permanentemente</c-form-button>
+        <a href="{% url "atividades" %}">
+            <c-form-button color="neutral">Cancelar e voltar à lista</c-form-button>
+        </a>
+    </form>
+{% endblock screen %}
