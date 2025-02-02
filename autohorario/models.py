@@ -25,7 +25,7 @@ class Profissional(models.Model):
     funcao = models.CharField(max_length=255)
     endereco = models.CharField(max_length=255, null=True, blank=True)
     imagem = models.ImageField(null=True, blank=True, upload_to="media/profile_pictures", default="Imagem_do_WhatsApp_de_2023-08-27_às_20.55.51.jpg")
-    id_atividade = models.ManyToManyField(Atividade)
+    id_atividade = models.ManyToManyField(Atividade, blank=True)
 
     # def publish(self):
     #     if self.imagem == None:

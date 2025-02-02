@@ -12,6 +12,8 @@ from django.contrib.auth.decorators import login_required
 
 from django.contrib.auth.decorators import login_required
 
+import datetime
+
 def index(request):
     if request.user.is_authenticated:
         return redirect(dashboard)
@@ -93,7 +95,14 @@ def agenda(request):
             profile = None 
 
     profissionais = Profissional.objects.all()
-    return render(request, "agenda.html", {'profissionais': profissionais, 'sidebar': 'agenda', 'profile': profile})
+    return render(request, "agenda.html", {
+        'profissionais': profissionais, 
+        'sidebar': 'agenda', 
+        'profile': profile, 
+        'full_name': request.user.get_full_name(),
+        'export_date': datetime.datetime.now(),
+        }
+    )
 
 @login_required
 def turmas(request):

@@ -6,15 +6,22 @@ Variáveis:
 - alt: breve texto logo após o título
 -->
 
-<div class="bg-primary-100 rounded-lg shadow-sm border border-primary-700 flex justify-between items-center max-w-[500px] px-4 py-2 flex-grow">
+{% load static %}
+
+<div class="bg-primary-100 rounded-lg shadow-sm border border-primary-700 flex items-center max-w-[500px] flex-grow">
+    {% if image %}
     <div class="">
+        <img class="h-[65px] w-[80px] rounded-l-lg object-cover" src="media/{{image}}" alt="{{image}}">
+    </div>
+    {% endif %}
+    <div class="px-4 py-2 w-full">
         <div class="flex">
             <h1 class="font-bold">{{ title }}</h1>
             <p class="font-normal ml-2 italic">{{ alt }}</p>
         </div>
         <p class="text-primary-900 italic">{{ description }}</p>
     </div>
-    <div class="flex gap-2">
+    <div class="flex gap-2 px-4 py-2">
         <c-card-button
             action="{{ urlEdit }}"
             icon="pencil-square"

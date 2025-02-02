@@ -1,61 +1,122 @@
 {% extends "dashboard.html" %}
+{% load static %}
 
 {% load custom_filters %}
 
 {% block screen %}
-    <c-title underline>Agenda</c-title>
+    <div class="print:hidden">
+        <c-title underline>Agenda</c-title>
+    </div>
 
-    <div class="grid grid-cols-[auto_repeat(5,1fr)] grid-rows-[auto_repeat(5,1fr)] gap-0 gap-x-1 rounded-lg overflow-hidden my-6 text-center text-xs">
-        <!-- Cabeçalho -->
-        <div></div>
-        <div class="bg-red-400 p-2 text-sm rounded-t-md"><b>Segunda-feira</b></div>
-        <div class="bg-orange-400 p-2 text-sm border-l border-red-300 rounded-t-md"><b>Terça-feira</b></div>
-        <div class="bg-yellow-400 p-2 text-sm border-l border-red-300 rounded-t-md"><b>Quarta-feira</b></div>
-        <div class="bg-green-400 p-2 text-sm border-l border-red-300 rounded-t-md"><b>Quinta-feira</b></div>
-        <div class="bg-blue-400 p-2 text-sm border-l border-red-300 rounded-t-md"><b>Sexta-feira</b></div>
-
-        <!-- Linha 1 -->
-        <div class="bg-none p-2 flex items-center border-b border-slate-500 border-dashed justify-end">8:00 - 9:00</div>
-        <div class="bg-red-200 p-2 border-b border-red-300 flex flex-col items-center justify-center">
-            <p><b>EJA I</b></p>
-            <p>Leni da Silva e Cleiton Rodrigues</p>
+    <div class="print:flex justify-between hidden">
+        <div >
+            <img class="h-[80px] saturate-0" src="{% static 'images/apae-logo.png' %}" alt="Logo da apae">
         </div>
-        <div class="bg-orange-200 p-2 border-b border-orange-300  flex flex-col items-center justify-center">Professor</div>
-        <div class="bg-yellow-200 p-2 border-b border-yellow-300  flex flex-col items-center justify-center">Professor</div>
-        <div class="bg-green-200 p-2 border-b border-green-300  flex flex-col items-center justify-center">Professor</div>
-        <div class="bg-blue-200 p-2 border-b border-blue-300  flex flex-col items-center justify-center">Professor</div>
+        <div class="">
+            <h1 class="font-bold text-xl text-center">Planejamento de Horários</h1>
+            <p class="text-center text-xl">Turma ou Professor Tal</p>
+        </div>
+        <div >
+            <img class="h-[80px] opacity-0" src="{% static 'images/apae-logo.png' %}" alt="Logo da apae">
+        </div>
+    </div>
 
-        <!-- Linha 2 -->
-        <div class="bg-none p-2 flex items-center border-b border-slate-500 border-dashed justify-end">9:00 - 10:00</div>
-        <div class="bg-red-200 p-2 border-red-300  flex flex-col items-center justify-center">Professor</div>
-        <div class="bg-orange-200 p-2  border-orange-300  flex flex-col items-center justify-center">Professor</div>
-        <div class="bg-yellow-200 p-2  border-yellow-300  flex flex-col items-center justify-center">Professor</div>
-        <div class="bg-green-200 p-2   border-green-300  flex flex-col items-center justify-center">Professor</div>
-        <div class="bg-blue-200 p-2    border-blue-300  flex flex-col items-center justify-center">Professor</div>
+    <div class="flex flex-col gap-0">
+        <h2 class="text-center font-bold text-2xl uppercase font-handwrite mt-4">Manhã</h1>
+        <div class="grid grid-cols-[auto_repeat(5,1fr)] grid-rows-[auto_repeat(5,1fr)] gap-0 gap-x-1 rounded-lg overflow-hidden my-2 text-center text-xs printable">
+            <!-- Cabeçalho -->
+            <div></div>
+            <div class="bg-red-400 p-2 text-sm rounded-t-md"><b>Segunda-feira</b></div>
+            <div class="bg-orange-400 p-2 text-sm rounded-t-md"><b>Terça-feira</b></div>
+            <div class="bg-yellow-400 p-2 text-sm rounded-t-md"><b>Quarta-feira</b></div>
+            <div class="bg-green-400 p-2 text-sm rounded-t-md"><b>Quinta-feira</b></div>
+            <div class="bg-blue-400 p-2 text-sm rounded-t-md"><b>Sexta-feira</b></div>
+            <!-- Linha 1 -->
+            <div class="bg-none p-2 flex items-center border-b border-slate-500 border-dashed justify-end">7:45 - 8:45</div>
+            <div class="bg-red-200 p-2 border-b border-red-300 flex flex-col items-center justify-center">
+                <p><b>EJA I</b></p>
+                <p>Leni da Silva e Cleiton Rodrigues</p>
+            </div>
+            <div class="bg-orange-200 p-2 border-b border-orange-300  flex flex-col items-center justify-center">Professor</div>
+            <div class="bg-yellow-200 p-2 border-b border-yellow-300  flex flex-col items-center justify-center">Professor</div>
+            <div class="bg-green-200 p-2 border-b border-green-300  flex flex-col items-center justify-center">Professor</div>
+            <div class="bg-blue-200 p-2 border-b border-blue-300  flex flex-col items-center justify-center">Professor</div>
+            <!-- Linha 2 -->
+            <div class="bg-none p-2 flex items-center border-b border-slate-500 border-dashed justify-end">8:45 - 09:30</div>
+            <div class="bg-red-200 p-2 border-red-300  flex flex-col items-center justify-center">Professor</div>
+            <div class="bg-orange-200 p-2  border-orange-300  flex flex-col items-center justify-center">Professor</div>
+            <div class="bg-yellow-200 p-2  border-yellow-300  flex flex-col items-center justify-center">Professor</div>
+            <div class="bg-green-200 p-2   border-green-300  flex flex-col items-center justify-center">Professor</div>
+            <div class="bg-blue-200 p-2    border-blue-300  flex flex-col items-center justify-center">Professor</div>
+            <!-- Linha 3 (Intervalo) -->
+            <div class="bg-none p-2 flex items-center border-b border-slate-500 border-dashed justify-end">09:30 - 10:00</div>
+            <div class="bg-red-200 p-2 opacity-50 border-b border-red-300  flex flex-col items-center justify-center">Intervalo</div>
+            <div class="bg-orange-200 p-2 opacity-50 border-b border-orange-300  flex flex-col items-center justify-center">Intervalo</div>
+            <div class="bg-yellow-200 p-2 opacity-50 border-b border-yellow-300  flex flex-col items-center justify-center">Intervalo</div>
+            <div class="bg-green-200 p-2 opacity-50 border-b border-green-300  flex flex-col items-center justify-center">Intervalo</div>
+            <div class="bg-blue-200 p-2 opacity-50 border-b border-blue-300  flex flex-col items-center justify-center">Intervalo</div>
+            <!-- Linha 4 -->
+            <div class="bg-none p-2 flex items-center border-b border-slate-500 border-dashed justify-end">10:00 - 10:45</div>
+            <div class="bg-red-200 p-2 border-b border-red-300  flex flex-col items-center justify-center">Professor fulano da silvar</div>
+            <div class="bg-orange-200 p-2 border-b border-orange-300  flex flex-col items-center justify-center">Professor</div>
+            <div class="bg-yellow-200 p-2 border-b border-yellow-300  flex flex-col items-center justify-center">Professor</div>
+            <div class="bg-green-200 p-2 border-b border-green-300  flex flex-col items-center justify-center">Professor</div>
+            <div class="bg-blue-200 p-2 border-b border-blue-300  flex flex-col items-center justify-center">Professor</div>
+            <!-- Linha 5 -->
+            <div class="bg-none p-2 flex items-center justify-end">10:45 - 11:30</div>
+            <div class="bg-red-200 p-2  flex flex-col items-center justify-center rounded-b-md">Professor</div>
+            <div class="bg-orange-200 p-2 border-orange-300  flex flex-col items-center justify-center rounded-b-md">Professor</div>
+            <div class="bg-yellow-200 p-2 border-yellow-300  flex flex-col items-center justify-center rounded-b-md">Professor</div>
+            <div class="bg-green-200 p-2 border-green-300  flex flex-col items-center justify-center rounded-b-md">Professor</div>
+            <div class="bg-blue-200 p-2  flex flex-col items-center justify-center   rounded-b-md">Professor</div>
+        </div>
+        <h2 class="text-center font-bold text-2xl uppercase font-handwrite">Tarde</h1>
+        <div class="grid grid-cols-[auto_repeat(5,1fr)] auto-rows-fr gap-0 gap-x-1 rounded-lg overflow-hidden text-center text-xs printable">
+            <!-- Linha 1 -->
+            <div class="bg-none p-2 flex items-center border-b border-slate-500 border-dashed justify-end">13:10 - 14:10</div>
+            <div class="bg-red-200 p-2 border-b border-red-300 flex flex-col items-center justify-center print:outline-1 print:outline-black">
+                <p><b>EJA I</b></p>
+                <p>Leni da Silva e Cleiton Rodrigues</p>
+            </div>
+            <div class="bg-orange-200 p-2 border-b border-orange-300  flex flex-col items-center justify-center">Professor</div>
+            <div class="bg-yellow-200 p-2 border-b border-yellow-300  flex flex-col items-center justify-center">Professor</div>
+            <div class="bg-green-200 p-2 border-b border-green-300  flex flex-col items-center justify-center">Professor</div>
+            <div class="bg-blue-200 p-2 border-b border-blue-300  flex flex-col items-center justify-center">Professor</div>
+            <!-- Linha 2 -->
+            <div class="bg-none p-2 flex items-center border-b border-slate-500 border-dashed justify-end">14:10 - 15:00</div>
+            <div class="bg-red-200 p-2 border-red-300  flex flex-col items-center justify-center">Professor</div>
+            <div class="bg-orange-200 p-2  border-orange-300  flex flex-col items-center justify-center">Professor</div>
+            <div class="bg-yellow-200 p-2  border-yellow-300  flex flex-col items-center justify-center">Professor</div>
+            <div class="bg-green-200 p-2   border-green-300  flex flex-col items-center justify-center">Professor</div>
+            <div class="bg-blue-200 p-2    border-blue-300  flex flex-col items-center justify-center">Professor</div>
+            <!-- Linha 3 (Intervalo) -->
+            <div class="bg-none p-2 flex items-center border-b border-slate-500 border-dashed justify-end">15:00 - 15:15</div>
+            <div class="bg-red-200 p-2 opacity-50 border-b border-red-300  flex flex-col items-center justify-center">Intervalo</div>
+            <div class="bg-orange-200 p-2 opacity-50 border-b border-orange-300  flex flex-col items-center justify-center">Intervalo</div>
+            <div class="bg-yellow-200 p-2 opacity-50 border-b border-yellow-300  flex flex-col items-center justify-center">Intervalo</div>
+            <div class="bg-green-200 p-2 opacity-50 border-b border-green-300  flex flex-col items-center justify-center">Intervalo</div>
+            <div class="bg-blue-200 p-2 opacity-50 border-b border-blue-300  flex flex-col items-center justify-center">Intervalo</div>
+            <!-- Linha 4 -->
+            <div class="bg-none p-2 flex items-center border-b border-slate-500 border-dashed justify-end">15:15 - 16:00</div>
+            <div class="bg-red-200 p-2 border-b border-red-300  flex flex-col items-center justify-center">Professor fulano da silvar</div>
+            <div class="bg-orange-200 p-2 border-b border-orange-300  flex flex-col items-center justify-center">Professor</div>
+            <div class="bg-yellow-200 p-2 border-b border-yellow-300  flex flex-col items-center justify-center">Professor</div>
+            <div class="bg-green-200 p-2 border-b border-green-300  flex flex-col items-center justify-center">Professor</div>
+            <div class="bg-blue-200 p-2 border-b border-blue-300  flex flex-col items-center justify-center">Professor</div>
+            <!-- Linha 5 -->
+            <div class="bg-none p-2 flex items-center justify-end">16:00 - 16:45</div>
+            <div class="bg-red-200 p-2  flex flex-col items-center justify-center rounded-b-md">Professor</div>
+            <div class="bg-orange-200 p-2 border-orange-300  flex flex-col items-center justify-center rounded-b-md">Professor</div>
+            <div class="bg-yellow-200 p-2 border-yellow-300  flex flex-col items-center justify-center rounded-b-md">Professor</div>
+            <div class="bg-green-200 p-2 border-green-300  flex flex-col items-center justify-center rounded-b-md">Professor</div>
+            <div class="bg-blue-200 p-2  flex flex-col items-center justify-center   rounded-b-md">Professor</div>
+        </div>
+    </div>
 
-        <!-- Linha 3 (Intervalo) -->
-        <div class="bg-none p-2 flex items-center border-b border-slate-500 border-dashed justify-end">10:00 - 10:30</div>
-        <div class="bg-red-200 p-2 opacity-50 border-b border-red-300  flex flex-col items-center justify-center">Intervalo</div>
-        <div class="bg-orange-200 p-2 opacity-50 border-b border-orange-300  flex flex-col items-center justify-center">Intervalo</div>
-        <div class="bg-yellow-200 p-2 opacity-50 border-b border-yellow-300  flex flex-col items-center justify-center">Intervalo</div>
-        <div class="bg-green-200 p-2 opacity-50 border-b border-green-300  flex flex-col items-center justify-center">Intervalo</div>
-        <div class="bg-blue-200 p-2 opacity-50 border-b border-blue-300  flex flex-col items-center justify-center">Intervalo</div>
-
-        <!-- Linha 4 -->
-        <div class="bg-none p-2 flex items-center border-b border-slate-500 border-dashed justify-end">10:30 - 11:30</div>
-        <div class="bg-red-200 p-2 border-b border-red-300  flex flex-col items-center justify-center">Professor fulano da silvar</div>
-        <div class="bg-orange-200 p-2 border-b border-orange-300  flex flex-col items-center justify-center">Professor</div>
-        <div class="bg-yellow-200 p-2 border-b border-yellow-300  flex flex-col items-center justify-center">Professor</div>
-        <div class="bg-green-200 p-2 border-b border-green-300  flex flex-col items-center justify-center">Professor</div>
-        <div class="bg-blue-200 p-2 border-b border-blue-300  flex flex-col items-center justify-center">Professor</div>
-
-        <!-- Linha 5 -->
-        <div class="bg-none p-2 flex items-center justify-end">11:30 - 12:30</div>
-        <div class="bg-red-200 p-2  flex flex-col items-center justify-center rounded-b-md">Professor</div>
-        <div class="bg-orange-200 p-2 border-orange-300  flex flex-col items-center justify-center rounded-b-md">Professor</div>
-        <div class="bg-yellow-200 p-2 border-yellow-300  flex flex-col items-center justify-center rounded-b-md">Professor</div>
-        <div class="bg-green-200 p-2 border-green-300  flex flex-col items-center justify-center rounded-b-md">Professor</div>
-        <div class="bg-blue-200 p-2  flex flex-col items-center justify-center   rounded-b-md">Professor</div>
+    <div class="print:block hidden text-center text-sm">
+        <p><b>Gerado em:</b> <i>aguardo do algoritmo</i></p>
+        <p><b>Exportado em:</b> {{ export_date }}</p>
+        <p><b>Exportado por</b>: {{ full_name }}</p>
     </div>
 
 
@@ -66,7 +127,7 @@
                 icon="printer"
                 id="exportar"
                 name="Exportar"
-                href="https://google.com"
+                onclick="print()"
             />
             <c-speed-dial-button 
                 icon="document-magnifying-glass"
@@ -79,7 +140,7 @@
             <svg class="w-5 h-5 transition-transform group-hover:rotate-45" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
             </svg>
-            <span class="sr-only">Open actions menu</span>
+            <span class="sr-only">Abrir menu de ações</span>
         </button>
     </div>
 
