@@ -42,6 +42,10 @@ urlpatterns = [
     path('profissionais/editar/<int:id_profissional>/', views.edit_profissional, name='edit_profissional'),
     path('profissionais/novo/', views.new_profissional, name='new_profissional'),
 
+    path('vinculos/apagar/<int:id_profissional>/<int:id_atividade>/', views.delete_vinculo, name='delete_vinculo'),
+    path('vinculos/editar/<int:id_profissional>/<int:id_atividade>/', views.edit_vinculo, name='edit_vinculo'),
+    path('vinculos/novo/', views.new_vinculo, name='new_vinculo'),
+
     # path('teste/', views.teste, name="teste"),
     path('export/', views.export, name="export")
 ]
