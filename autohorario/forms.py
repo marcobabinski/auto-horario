@@ -103,13 +103,27 @@ class AtividadeForm(forms.ModelForm):
         }
 
 class VinculoProfissionalAtividadeForm(forms.ModelForm):
+    id_profissional = forms.ModelChoiceField(
+        queryset=Profissional.objects.all(),
+        label="Profissional",
+        widget=forms.Select(attrs={
+            'class': 'w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500'
+        }),
+        empty_label="Selecione um profissional" 
+    )
+
+    id_atividade = forms.ModelChoiceField(
+        queryset=Atividade.objects.all(),
+        label="Atividade",
+        widget=forms.Select(attrs={
+            'class': 'w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500'
+        }),
+        empty_label="Selecione uma atividades" 
+    )
+
     class Meta:
         model = VinculoProfissionalAtividade
         fields = ['id_profissional', 'id_atividade']
-        labels = {
-            'id_profissional': 'Profissional',
-            'id_atividade': 'Atividade',
-        }
 
     def clean(self):
         cleaned_data = super().clean()
