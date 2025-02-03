@@ -6,6 +6,8 @@ from .models import Turma
 from .models import Profissional
 from .models import Atividade
 from .models import Caracteristica
+from .models import VinculoProfissionalAtividade
+from django.core.exceptions import ValidationError
 
 class FormLogin(forms.Form):
     usuario = forms.CharField(label='Usuário', max_length=20)
@@ -14,11 +16,19 @@ class FormLogin(forms.Form):
 class TurmaForm(forms.ModelForm):
     class Meta:
         model = Turma
-        fields = ['nome', 'qnt_de_alunos']  # Substitua pelos campos reais do modelo.
+        fields = ['nome', 'qnt_de_alunos'] 
     
         labels = {
                 'qnt_de_alunos': ('Quantidade de Alunos'),
             }
+        widgets = {
+            'nome': forms.TextInput(attrs={
+                'class': 'w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500'
+            }),
+            'qnt_de_alunos': forms.TextInput(attrs={
+                'class': 'w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500'
+            }),
+        }
 
 class ProfissionalForm(forms.ModelForm):
     # id_atividade = forms.ModelMultipleChoiceField(
@@ -35,12 +45,25 @@ class ProfissionalForm(forms.ModelForm):
             'endereco': 'Endereço',
             'funcao': 'Função',
         }
+        widgets = {
+            'nome': forms.TextInput(attrs={
+                'class': 'w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500'
+            }),
+            'endereco': forms.TextInput(attrs={
+                'class': 'w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500'
+            }),
+            'funcao': forms.TextInput(attrs={
+                'class': 'w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500'
+            }),
+        }
 
 class AtividadeForm(forms.ModelForm):
     id_caracteristica = forms.ModelChoiceField(
         queryset=Caracteristica.objects.all(),
         label="Categoria",
-        widget=forms.Select(attrs={'class': 'form-control'}),
+        widget=forms.Select(attrs={
+            'class': 'w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500'
+        }),
         empty_label="Selecione uma categoria" 
     )
 
@@ -49,14 +72,18 @@ class AtividadeForm(forms.ModelForm):
                  (4, 'Quarta-feira'), (5, 'Quinta-feira'), (6, 'Sexta-feira'), 
                  (7, 'Sábado')],
         label="Dia da Semana",
-        widget=forms.Select(attrs={'class': 'form-control'})
+        widget=forms.Select(attrs={
+            'class': 'w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500'
+        }),
     )
     
     periodos = forms.IntegerField(
         min_value=1,
         max_value=10,  # Ajuste conforme suas regras
         label="Períodos",
-        widget=forms.NumberInput(attrs={'class': 'form-control'})
+        widget=forms.NumberInput(attrs={
+            'class': 'w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500'
+        })
     )
 
     class Meta:
@@ -66,3 +93,32 @@ class AtividadeForm(forms.ModelForm):
             'nome': 'Nome da Atividade',
             'carga_horaria': 'Carga Horária',
         }
+        widgets = {
+            'nome': forms.TextInput(attrs={
+                'class': 'w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500'
+            }),
+            'carga_horaria': forms.NumberInput(attrs={
+                'class': 'w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500'
+            }),
+        }
+
+class VinculoProfissionalAtividadeForm(forms.ModelForm):
+    class Meta:
+        model = VinculoProfissionalAtividade
+        fields = ['id_profissional', 'id_atividade']
+        labels = {
+            'id_profissional': 'Profissional',
+            'id_atividade': 'Atividade',
+        }
+
+    def clean(self):
+        cleaned_data = super().clean()
+        id_profissional = cleaned_data.get('id_profissional')
+        id_atividade = cleaned_data.get('id_atividade')
+
+        if VinculoProfissionalAtividade.objects.filter(id_profissional=id_profissional, id_atividade=id_atividade).exists():
+            raise ValidationError(
+                {"id_profissional": "Essa relação entre o profissional e a atividade já existe."}
+            )
+
+        return cleaned_data
