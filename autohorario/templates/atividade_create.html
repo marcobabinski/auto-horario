@@ -1,11 +1,22 @@
 {% extends "dashboard.html" %}
 
 {% block screen %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.0.0/dist/tailwind.min.css" rel="stylesheet">
+
     <c-title underline>Editar Atividade</c-title>
-    <form method="post">
+    <div class="mb-5"></div>
+    <form method="post" class="max-w-sm mx-auto">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded">Salvar</button>
+
+        {% for field in form %}
+            <div class="mb-5">
+                <label for="{{ field.id_for_label }}" class="block mb-2 text-sm font-medium text-gray-900">{{ field.label }}</label>
+                {{ field }}
+            </div>
+        {% endfor %}
+        
+        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Salvar</button>
         <a href="{% url 'atividades' %}" class="bg-gray-300 px-4 py-2 rounded">Cancelar</a>
-    </form>
+    </form>    
 {% endblock screen %}
