@@ -6,8 +6,8 @@ from autohorario.forms import FormLogin
 from django.http.response import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.utils import timezone
-from .forms import TurmaForm, ProfissionalForm, AtividadeForm
-from .models import Profile 
+from .forms import TurmaForm, ProfissionalForm, AtividadeForm, VinculoProfissionalAtividadeForm
+from .models import Profile, VinculoProfissionalAtividade
 from django.contrib.auth.decorators import login_required
 
 from django.contrib.auth.decorators import login_required
@@ -136,8 +136,83 @@ def vinculos(request):
             profile = Profile.objects.get(user=request.user)
         except Profile.DoesNotExist:
             profile = None 
-    profissionais = Profissional.objects.all()
-    return render(request, "vinculos.html", {'profissionais': profissionais, 'profile': profile, 'sidebar': 'vínculos'})
+
+    vinculos = VinculoProfissionalAtividade.objects.all().order_by("id_profissional")
+
+    return render(request, "vinculos.html", {
+        'vinculos': vinculos,
+        'profile': profile,
+        'sidebar': 'vínculos'
+    })
+
+@login_required
+def delete_vinculo(request, id_profissional, id_atividade):
+    try:
+        profile = Profile.objects.get(user=request.user)
+    except Profile.DoesNotExist:
+        profile = None
+
+    turma = get_object_or_404(Turma, pk=id_turma)
+
+    if request.method == "POST":
+        turma.delete()
+        return redirect('turmas')
+
+    return render(request, "turma_delete.html", {
+        "turma": turma,
+        "profile": profile,
+        'sidebar': 'turmas'
+    })
+
+
+@login_required
+def edit_vinculo(request, id_profissional, id_atividade):
+    try:
+        profile = Profile.objects.get(user=request.user)
+    except Profile.DoesNotExist:
+        profile = None
+
+    vinculo = get_object_or_404(VinculoProfissionalAtividade, id_profissional=id_profissional, id_atividade=id_atividade)
+
+    if request.method == "POST":
+        form = VinculoProfissionalAtividadeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('editar_profissional_atividade') 
+    else:
+        form = VinculoProfissionalAtividadeForm()
+
+    return render(request, "create_vinculo.html", {
+        "form": form,
+        "vinculo": vinculo,
+        "profile": profile,
+        'sidebar': 'vinculos'
+    })
+
+
+@login_required
+def new_vinculo(request):
+    try:
+        profile = Profile.objects.get(user=request.user)
+    except Profile.DoesNotExist:
+        profile = None
+
+    if request.method == "POST":
+        form = VinculoProfissionalAtividadeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('vinculos') 
+        else:
+            messages.error(request, 'Essa relação entre o profissional e a atividade já existe.')
+    else:
+        form = VinculoProfissionalAtividadeForm()
+        
+
+    return render(request, "vinculo_create.html", {
+        "form": form,
+        "profile": profile,
+        'sidebar': 'vínculos'
+    })
 
 @login_required
 def atividades(request):
