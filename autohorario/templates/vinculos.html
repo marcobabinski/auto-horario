@@ -2,5 +2,27 @@
 
 {% block screen %}
     <c-title underline>Vínculos</c-title>
-    <span class="italic text-slate-700">Posteriormente os vínculos serão exibidos aqui...</span>
+
+    <div class="grid gap-4 py-4 grid-cols-1 md:grid-cols-2">
+        {% if vinculos %}
+            {% for v in vinculos %}
+                <c-card
+                    cardId={{v.id_profissional.id_profissional}}
+                    title={{v}}
+                    urlDelete="{% url "delete_vinculo" id_profissional=v.id_profissional.id_profissional id_atividade=v.id_atividade.id_atividade %}"
+                    urlEdit="{% url "edit_vinculo" id_profissional=v.id_profissional.id_profissional id_atividade=v.id_atividade.id_atividade %}"
+                />
+            {% endfor %}
+            <c-card-new href="{% url "new_vinculo" %}"/>
+        {% else %}
+            <c-card-new href="{% url "new_vinculo" %}"/>
+        {% endif %}
+    </div> 
+
+    <a href="{% url "new_vinculo" %}">
+        <div class="rounded-md bg-tertiary-500 text-white fixed bottom-4 right-4 cursor-pointer p-2">
+            {% heroicon_solid "plus" size=40 %}
+        </div>
+    </a>
+
 {% endblock screen %}
