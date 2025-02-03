@@ -17,7 +17,7 @@
             {% endfor %}
             <c-card-new href="{% url "new_atividade" %}"/>
         {% else %}
-        <i>Nenhuma atividade encontrada.</i>
+            <c-card-new href="{% url "new_atividade" %}"/>
         {% endif %}
     </div>
     {% endif %}
