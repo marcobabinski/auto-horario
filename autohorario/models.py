@@ -49,3 +49,13 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+class VinculoProfissionalAtividade(models.Model):
+    id_profissional = models.ForeignKey(Profissional, on_delete=models.CASCADE)
+    id_atividade = models.ForeignKey(Atividade, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('id_profissional', 'id_atividade')
+        
+    def __str__(self):
+        return f"{self.id_profissional.nome} - {self.id_atividade.nome}"
