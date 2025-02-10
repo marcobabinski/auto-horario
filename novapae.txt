@@ -1,0 +1,30 @@
+Alfabetizacao	Leni	Aula	16	I	1
+Alfabetizacao	Leni	Ed. Fisica	2	G	2
+Alfabetizacao	Leni	Informatica	2	G	3
+EJA I	Regina	Aula	14	I	4
+EJA I	Taisa	Aula	1	I	5
+EJA I	Ana	Ed. Fisica	1	I	6
+EJA I	Regina	Informatica	1	I	7
+EJA I	Sibeli	Musica	1	I	8
+EJA II	Sibeli	Musica	1	I	8
+EJA I	Ana	Grupo	2	G	9
+EJA I	Taisa	Grupo	2	G	9
+EJA II	Ana	Grupo	2	G	9
+EJA II	Taisa	Grupo	2	G	9
+EJA II	Ieda	Aula	14	I	10
+EJA II	Taisa	Aula	1	I	11
+EJA II	Ana	Ed. Fisica	1	I	12
+EJA II	Ieda	Informatica	1	I	13
+EJA III	Cledi	Aula	15	I	14
+EJA III	Taisa	Aula	1	I	15
+EJA III	Ana	Ed. Fisica	2	S	16
+EJA III	Sibeli	Musica	1	I	17
+EJA III	Cledi	Informatica	1	I	18
+AEE Anos Finais	Andreia	Aula	19	I	19
+AEE Anos Finais	Andreia	Informatica	1	I	20
+AEE Infantil	Denise M	Aula	16	I	21
+AEE Infantil	Denise M	Informatica	1	I	22
+AEE Infantil	Taisa	Aula	1	I	23
+AEE Infantil	Ana	Ed. Fisica	1	I	24
+AEE Infantil	Denise M	Hora Atividade	1	I	25
+AEE Anos Finais	Andreia	Aula	20	I	26

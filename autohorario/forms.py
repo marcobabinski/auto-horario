@@ -39,7 +39,7 @@ class ProfissionalForm(forms.ModelForm):
     
     class Meta:
         model = Profissional
-        fields = ['nome', 'funcao', 'endereco', 'imagem',]
+        fields = ['nome', 'funcao', 'endereco']
         labels = {
             'nome': 'Nome do Profissional',
             'endereco': 'Endereço',
@@ -67,15 +67,15 @@ class AtividadeForm(forms.ModelForm):
         empty_label="Selecione uma categoria" 
     )
 
-    dia_da_semana = forms.ChoiceField(
-        choices=[(1, 'Domingo'), (2, 'Segunda-feira'), (3, 'Terça-feira'), 
-                 (4, 'Quarta-feira'), (5, 'Quinta-feira'), (6, 'Sexta-feira'), 
-                 (7, 'Sábado')],
-        label="Dia da Semana",
-        widget=forms.Select(attrs={
-            'class': 'w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500'
-        }),
-    )
+    # dia_da_semana = forms.ChoiceField(
+    #     choices=[(1, 'Domingo'), (2, 'Segunda-feira'), (3, 'Terça-feira'), 
+    #              (4, 'Quarta-feira'), (5, 'Quinta-feira'), (6, 'Sexta-feira'), 
+    #              (7, 'Sábado')],
+    #     label="Dia da Semana",
+    #     widget=forms.Select(attrs={
+    #         'class': 'w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500'
+    #     }),
+    # )
     
     periodos = forms.IntegerField(
         min_value=1,
@@ -88,7 +88,7 @@ class AtividadeForm(forms.ModelForm):
 
     class Meta:
         model = Atividade
-        fields = ['nome', 'carga_horaria', 'id_caracteristica', 'dia_da_semana', 'periodos']
+        fields = ['nome', 'carga_horaria', 'id_caracteristica', 'periodos']
         labels = {
             'nome': 'Nome da Atividade',
             'carga_horaria': 'Carga Horária',
@@ -102,37 +102,53 @@ class AtividadeForm(forms.ModelForm):
             }),
         }
 
-class VinculoProfissionalAtividadeForm(forms.ModelForm):
-    id_profissional = forms.ModelChoiceField(
-        queryset=Profissional.objects.all(),
-        label="Profissional",
-        widget=forms.Select(attrs={
-            'class': 'w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500'
-        }),
-        empty_label="Selecione um profissional" 
-    )
+# class VinculoProfissionalAtividadeForm(forms.ModelForm):
+#     id_profissional = forms.ModelChoiceField(
+#         queryset=Profissional.objects.all(),
+#         label="Profissional",
+#         widget=forms.Select(attrs={
+#             'class': 'w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500'
+#         }),
+#         empty_label="Selecione um profissional" 
+#     )
 
-    id_atividade = forms.ModelChoiceField(
-        queryset=Atividade.objects.all(),
-        label="Atividade",
-        widget=forms.Select(attrs={
-            'class': 'w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500'
-        }),
-        empty_label="Selecione uma atividades" 
+#     id_atividade = forms.ModelMultipleChoiceField(
+#         queryset=Atividade.objects.all(),
+#         label="Atividade",
+#         widget=forms.Select(attrs={
+#             'class': 'w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500'
+#         }),
+#         empty_label="Selecione uma atividades" 
+#     )
+
+#     class Meta:
+#         model = VinculoProfissionalAtividade
+#         fields = ['id_profissional', 'id_atividade']
+
+#     def clean(self):
+#         cleaned_data = super().clean()
+#         id_profissional = cleaned_data.get('id_profissional')
+#         id_atividade = cleaned_data.get('id_atividade')
+
+#         if VinculoProfissionalAtividade.objects.filter(id_profissional=id_profissional, id_atividade=id_atividade).exists():
+#             raise ValidationError(
+#                 {"id_profissional": "Essa relação entre o profissional e a atividade já existe."}
+#             )
+
+#         return cleaned_data
+
+class VinculoForm(forms.ModelForm):
+    id_profissional = forms.ModelMultipleChoiceField(
+        queryset=Profissional.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        required=False
+    )
+    id_turma = forms.ModelMultipleChoiceField(
+        queryset=Turma.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        required=False
     )
 
     class Meta:
-        model = VinculoProfissionalAtividade
-        fields = ['id_profissional', 'id_atividade']
-
-    def clean(self):
-        cleaned_data = super().clean()
-        id_profissional = cleaned_data.get('id_profissional')
-        id_atividade = cleaned_data.get('id_atividade')
-
-        if VinculoProfissionalAtividade.objects.filter(id_profissional=id_profissional, id_atividade=id_atividade).exists():
-            raise ValidationError(
-                {"id_profissional": "Essa relação entre o profissional e a atividade já existe."}
-            )
-
-        return cleaned_data
+        model = Atividade
+        fields = ["id_profissional", "id_turma"]

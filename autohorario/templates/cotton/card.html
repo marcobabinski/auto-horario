@@ -4,6 +4,10 @@ Variáveis:
 - title: texto em destaque
 - description: texto secundário
 - alt: breve texto logo após o título
+
+- urlEdit
+- urlDelete
+- urlLink
 -->
 
 {% load static %}
@@ -11,7 +15,7 @@ Variáveis:
 <div class="bg-primary-100 rounded-lg shadow-sm border border-primary-700 flex items-center max-w-[500px] flex-grow">
     {% if image %}
         <div class="">
-            <img class="h-[65px] w-[80px] rounded-l-lg object-cover" src="media/{{image}}" alt="{{image}}">
+            <img class="h-[65px] w-[80px] rounded-l-lg object-cover" src="{{ image }}" alt="{{image}}">
         </div>
     {% endif %}
     <div class="px-4 py-2 w-full">
@@ -22,6 +26,12 @@ Variáveis:
         <p class="text-primary-900 italic">{{ description }}</p>
     </div>
     <div class="flex gap-2 px-4 py-2">
+        {% if urlLink %}
+        <c-card-button
+            action="{{ urlLink }}"
+            icon="link"
+        />
+        {% endif %}
         <c-card-button
             action="{{ urlEdit }}"
             icon="pencil-square"

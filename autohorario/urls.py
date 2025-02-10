@@ -47,7 +47,11 @@ urlpatterns = [
     path('vinculos/novo/', views.new_vinculo, name='new_vinculo'),
 
     # path('teste/', views.teste, name="teste"),
-    path('export/', views.export, name="export")
+    path('export/', views.export, name="export"),
+
+    path("vinculo/<int:id_atividade>/editar/", views.editar_vinculo, name="editar_vinculo"),
+    path('script/', views.script, name="script"),
+    path('scriptst/', views.scriptst, name="scriptst"),
 ]
 
 if settings.DEBUG:

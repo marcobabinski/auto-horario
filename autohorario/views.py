@@ -6,9 +6,12 @@ from autohorario.forms import FormLogin
 from django.http.response import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.utils import timezone
-from .forms import TurmaForm, ProfissionalForm, AtividadeForm, VinculoProfissionalAtividadeForm
+from .forms import TurmaForm, ProfissionalForm, AtividadeForm, VinculoForm
 from .models import Profile, VinculoProfissionalAtividade
 from django.contrib.auth.decorators import login_required
+import os
+from oi import run
+import threading
 
 from django.contrib.auth.decorators import login_required
 
@@ -446,3 +449,50 @@ def export(request):
     data["atividades"] = atividades
 
     return JsonResponse(data, safe=False)
+
+
+@login_required
+def editar_vinculo(request, id_atividade):
+    atividade = get_object_or_404(Atividade, pk=id_atividade)
+
+    if request.method == "POST":
+        form = VinculoForm(request.POST, instance=atividade)
+        if form.is_valid():
+            form.save()
+            return redirect("editar_vinculo", id_atividade=atividade.id_atividade)  # Recarregar página após salvar
+    else:
+        form = VinculoForm(instance=atividade)
+
+    return render(request, "editar_vinculo.html", {"form": form, "atividade": atividade})
+
+
+@login_required
+def script(request):
+    def run_script_thread():
+        run()
+        
+    thread = threading.Thread(target=run_script_thread)
+    thread.start()
+    return redirect("scriptst")
+
+
+def scriptst(request):
+    if request.user.is_authenticated:
+        try:
+            profile = Profile.objects.get(user=request.user)
+        except Profile.DoesNotExist:
+            profile = None 
+
+    f = open("oi.txt", "r+")
+    valor = f.read()
+
+    context = {"profile": profile, "status": valor}
+
+    print(valor)
+
+    if (valor == "2"):
+        f.seek(0)
+        f.write("0")
+        f.truncate()
+
+    return render(request, "status.html", context)

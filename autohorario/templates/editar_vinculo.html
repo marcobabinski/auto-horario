@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Atividade</title>
+</head>
+<body>
+    <h2>Editar Atividade: {{ atividade.nome }}</h2>
+    
+    <form method="post">
+        {% csrf_token %}
+
+        <h3>Profissionais</h3>
+        {{ form.id_profissional }}
+
+        <h3>Turmas</h3>
+        {{ form.id_turma }}
+
+        <br><br>
+        <button type="submit">Salvar</button>
+    </form>
+</body>
+</html>
