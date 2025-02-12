@@ -1,0 +1,44 @@
+{% extends "dashboard.html" %}
+{% load static %}
+{% block screen %}
+    <div class="print:hidden">
+        <c-title underline>Agenda</c-title>
+    </div>
+
+    <div class="print:flex justify-between hidden">
+        <div>
+            <img class="h-[80px] saturate-0" src="{% static 'images/apae-logo.png' %}" alt="Logo da apae">
+        </div>
+        <div>
+            <h1 class="font-bold text-xl text-center">Planejamento de Horários</h1>
+        </div>
+        <div>
+            <img class="h-[80px] opacity-0" src="{% static 'images/apae-logo.png' %}" alt="Logo da apae">
+        </div>
+    </div>
+
+    <div class="flex flex-col gap-0">
+        <div class="grid grid-cols-[auto_repeat(5,1fr)] gap-1 rounded-lg overflow-hidden my-2 text-center text-xs printable">
+            <!-- Cabeçalho com os dias -->
+            <div></div>
+            {% for dia in dias %}
+                <div class="p-2 text-sm rounded-t-md bg-{% cycle 'red' 'orange' 'yellow' 'green' 'blue' %}-400"><b>{{ dia }}</b></div>
+            {% endfor %}
+            
+            <!-- Corpo da tabela com horários e professores/turmas -->
+            {% for linha in tabela_horarios %}
+                <div class="p-2">{{ linha.0 }}</div> <!-- Exibe o horário na primeira coluna -->
+                {% for cell in linha|slice:1 %}
+                    <div class="p-2 border-b flex items-center justify-center bg-{% cycle 'red' 'orange' 'yellow' 'green' 'blue' %}-200">
+                        {{ cell }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="print:block hidden text-center text-sm">
+        <p><b>Exportado em:</b> {{ export_date }}</p>
+        <p><b>Exportado por:</b> {{ full_name }}</p>
+    </div>
+{% endblock screen %}

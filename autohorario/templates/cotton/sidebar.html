@@ -31,11 +31,11 @@
             icon="star"
             href="{% url "atividades" %}"
           />
-          <c-sidebar-card
+          {% comment %} <c-sidebar-card
             label="Vínculos"
             icon="link"
             href="{% url "vinculos" %}"
-          />
+          /> {% endcomment %}
        </ul>
     </div>
     <div class="flex gap-4">
@@ -44,9 +44,9 @@
             href="/logout"
             danger
         />
-        <c-sidebar-button
+        {% comment %} <c-sidebar-button
             icon="cog-8-tooth"
-        />
+        /> {% endcomment %}
     </div>
  </aside>
  

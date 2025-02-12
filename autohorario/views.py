@@ -13,9 +13,39 @@ import os
 from oi import run
 import threading
 
+import json
+from django.http import JsonResponse
+
 from django.contrib.auth.decorators import login_required
 
 import datetime
+
+def salvar_matriz(matriz):
+    matriz_convertida = []
+    
+    for periodo in matriz:
+        periodo_convertido = []
+        for prof_id, turma_id in periodo:
+            prof = Profissional.objects.get(id_profissional=prof_id).nome if Profissional.objects.filter(id_profissional=prof_id).exists() else "Desconhecido"
+            turma = Turma.objects.get(id_turma=turma_id).nome if Turma.objects.filter(id_turma=turma_id).exists() else "Desconhecido"
+            periodo_convertido.append([prof, turma])
+        matriz_convertida.append(periodo_convertido)
+    
+    with open("matriz_periodos.json", "w") as f:
+        json.dump(matriz_convertida, f)
+
+def carregar_arquivo(caminho):
+    with open(caminho, "r") as f:
+        return json.load(f)
+    
+def carregar_timestamp():
+    try:
+        with open("oi-tstamp.txt", "r") as f:
+            timestamp_str = f.read().strip()  # Remove espaços extras
+            dt_obj = datetime.datetime.strptime(timestamp_str, "%Y-%m-%d %H:%M:%S.%f")  # Converte para datetime
+            return dt_obj
+    except (FileNotFoundError, ValueError):
+        return None  # Retorna None em caso de erro
 
 def index(request):
     if request.user.is_authenticated:
@@ -89,6 +119,7 @@ def profissionais(request):
 
     return render(request, "profissionais.html", {'profissionais': profissionais, 'sidebar': 'profissionais', 'profile': profile, 'form': form })
 
+
 @login_required
 def agenda(request):
     if request.user.is_authenticated:
@@ -97,15 +128,56 @@ def agenda(request):
         except Profile.DoesNotExist:
             profile = None 
 
-    profissionais = Profissional.objects.all()
-    return render(request, "agenda.html", {
-        'profissionais': profissionais, 
-        'sidebar': 'agenda', 
-        'profile': profile, 
-        'full_name': request.user.get_full_name(),
-        'export_date': datetime.datetime.now(),
-        }
-    )
+    # Exemplo da matriz convertida
+    matriz = carregar_arquivo("matriz_periodos.json")
+
+    p1 = matriz[0::4]
+    p2 = matriz[1::4]
+    p3 = matriz[2::4]
+    p4 = matriz[3::4]
+
+    periodos = [p1,p2,[],p3,p4]
+
+    # Mapeia os horários para os índices da matriz
+    horarios = [
+        "7:45 - 8:45", "8:45 - 9:30", "9:30 - 10:00", "10:00 - 10:45", "10:45 - 11:30",
+    ]
+
+    cores = [
+        'red', 'orange', 'yellow', 'green', 'blue',     
+    ]
+    
+    # Lista de dias da semana
+    dias = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta']
+
+    dt_obj = carregar_timestamp()
+    data_legivel = dt_obj.strftime("%d de %B de %Y, %H:%M") if dt_obj else "Sem dados" if dt_obj else "Sem dados"
+
+    # Para traduzir o nome do mês para português corretamente
+    meses = {
+        "January": "Janeiro", "February": "Fevereiro", "March": "Março", "April": "Abril",
+        "May": "Maio", "June": "Junho", "July": "Julho", "August": "Agosto",
+        "September": "Setembro", "October": "Outubro", "November": "Novembro", "December": "Dezembro"
+    }
+    for en, pt in meses.items():
+        data_legivel = data_legivel.replace(en, pt)
+
+    contexto = {
+        "horarios": horarios,
+        # "matriz_convertida": matriz,
+        "gen_date": data_legivel,  # Pode ser preenchido com a data de exportação
+        "full_name": request.user.get_full_name() if request.user.is_authenticated else "Anônimo",
+        "profile": profile,
+        "dias": dias,  # Passando os dias para o template
+        "cores": cores,
+        "periodos": periodos,
+        "export_date": datetime.datetime.now(),
+    }
+    
+    return render(request, "agenda.html", contexto)
+
+
+
 
 @login_required
 def turmas(request):
@@ -468,8 +540,29 @@ def editar_vinculo(request, id_atividade):
 
 @login_required
 def script(request):
+    atividades = Atividade.objects.all()
+    response_data = []
+
+    for atividade in atividades:
+        turma = atividade.id_turma.first()
+        profissional = atividade.id_profissional.first()
+
+        response_data.append({
+            "turma": turma.id_turma if turma else None,
+            "prof": profissional.id_profissional if profissional else None,
+            "ch": atividade.periodos,
+            "duplas": 1 if atividade.id_caracteristica.nome == "Geminar" else 0,
+            # "recurso": atividade.id_atividade.id_caracteristica.id_caracteristica if atividade.id_atividade.id_caracteristica else None
+            "recurso": None,
+        })
+
+    print(response_data)
+
     def run_script_thread():
-        run()
+        resultado = run(response_data)
+
+        salvar_matriz(resultado)
+
         
     thread = threading.Thread(target=run_script_thread)
     thread.start()
@@ -496,3 +589,23 @@ def scriptst(request):
         f.truncate()
 
     return render(request, "status.html", context)
+
+
+def atividades_view(request):
+    atividades = Atividade.objects.all()
+    response_data = []
+
+    for atividade in atividades:
+        turma = atividade.id_turma.first()
+        profissional = atividade.id_profissional.first()
+
+        response_data.append({
+            "turma": turma.id_turma if turma else None,
+            "prof": profissional.id_profissional if profissional else None,
+            "ch": atividade.periodos,
+            "duplas": 1 if atividade.id_caracteristica.nome == "Geminar" else 0,
+            # "recurso": atividade.id_atividade.id_caracteristica.id_caracteristica if atividade.id_atividade.id_caracteristica else None
+            "recurso": None,
+        })
+
+    return HttpResponse(response_data)
