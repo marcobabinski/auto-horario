@@ -175,3 +175,11 @@ class VinculoForm(forms.ModelForm):
                 vinculo.id_turma.clear()
 
         return vinculo
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # Definir valores iniciais apenas se o formulário não estiver recebendo dados via POST
+        if not self.is_bound:
+            self.fields["id_profissional"].initial = Profissional.objects.first()
+            self.fields["id_turma"].initial = Turma.objects.first()

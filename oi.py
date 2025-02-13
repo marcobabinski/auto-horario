@@ -57,7 +57,7 @@ def run(response_data):
         # - Número mínimo de aulas duplas desejadas
         # - Recurso a ser usado
         
-        ATIV = response_data
+        ATIV = [item for item in response_data if item['turma'] is not None and item['prof'] is not None]
         
         # Imprime a matriz de horários gerada
         # Cada linha representa uma atividade e os horários onde está alocada

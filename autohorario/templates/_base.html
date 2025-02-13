@@ -33,6 +33,18 @@
 </head>
 
 <body class="bg-background min-h-lvh min-w-full" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+    {% if messages %}
+    <div id="alerts-area" class="absolute top-0 left-1/2 -translate-x-1/2 flex flex-col py-2">
+        {% for m in messages %}
+        <c-alert
+            tags="{{ m.tags }}"
+            title=""
+            text="{{ m.message }}"
+        />
+        {% endfor %}
+    </div>
+    {% endif %}
+
     {% block content %}
     
     {% endblock %}

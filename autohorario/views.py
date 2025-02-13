@@ -218,7 +218,7 @@ def vinculos(request):
     return render(request, "vinculos.html", {
         'vinculos': vinculos,
         'profile': profile,
-        'sidebar': 'vínculos'
+        'sidebar': 'atividades'
     })
 
 @login_required
@@ -532,7 +532,8 @@ def editar_vinculo(request, id_atividade):
         form = VinculoForm(request.POST, instance=atividade)
         if form.is_valid():
             form.save()
-            return redirect("editar_vinculo", id_atividade=atividade.id_atividade)  # Recarregar página após salvar
+            messages.success(request, "Vínculo salvo com sucesso!")
+            return redirect("atividades")  # Recarregar página após salvar
     else:
         form = VinculoForm(instance=atividade)
 
