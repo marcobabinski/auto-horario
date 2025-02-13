@@ -172,6 +172,7 @@ def agenda(request):
         "cores": cores,
         "periodos": periodos,
         "export_date": datetime.datetime.now(),
+        'sidebar': 'agenda',
     }
     
     return render(request, "agenda.html", contexto)
