@@ -1,23 +1,21 @@
-<!DOCTYPE html>
-<html lang="pt">
-<head>
-    <meta charset="UTF-8">
-    <title>Editar Atividade</title>
-</head>
-<body>
-    <h2>Editar Atividade: {{ atividade.nome }}</h2>
+{% extends "dashboard.html" %}
+{% load static %}
+
+{% load custom_filters %}
+
+{% block screen %}
+    <c-title underline>{{ atividade.nome }}</c-title>
     
-    <form method="post">
-        {% csrf_token %}
+    <div class="mt-4">
+        <form method="post">
+            {% csrf_token %}
+            <h3>Profissionais</h3>
+            {{ form.id_profissional }}
+            <h3>Turmas</h3>
+            {{ form.id_turma }}
+            <br>
+            <c-form-button color="tertiary" variant="default" type="submit">Salvar vínculo</c-form-button>
+        </form>
+    </div>
 
-        <h3>Profissionais</h3>
-        {{ form.id_profissional }}
-
-        <h3>Turmas</h3>
-        {{ form.id_turma }}
-
-        <br><br>
-        <button type="submit">Salvar</button>
-    </form>
-</body>
-</html>
+{% endblock screen %}

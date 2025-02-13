@@ -79,7 +79,7 @@ class AtividadeForm(forms.ModelForm):
     
     periodos = forms.IntegerField(
         min_value=1,
-        max_value=10,  # Ajuste conforme suas regras
+        max_value=20,  # Ajuste conforme suas regras
         label="Períodos",
         widget=forms.NumberInput(attrs={
             'class': 'w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500'
@@ -138,17 +138,40 @@ class AtividadeForm(forms.ModelForm):
 #         return cleaned_data
 
 class VinculoForm(forms.ModelForm):
-    id_profissional = forms.ModelMultipleChoiceField(
+    id_profissional = forms.ModelChoiceField(
         queryset=Profissional.objects.all(),
-        widget=forms.CheckboxSelectMultiple,
+        widget=forms.RadioSelect,
         required=False
     )
-    id_turma = forms.ModelMultipleChoiceField(
+    id_turma = forms.ModelChoiceField(
         queryset=Turma.objects.all(),
-        widget=forms.CheckboxSelectMultiple,
+        widget=forms.RadioSelect,
         required=False
     )
 
     class Meta:
-        model = Atividade
+        model = VinculoProfissionalAtividade
         fields = ["id_profissional", "id_turma"]
+
+    def save(self, commit=True):
+        """Sobrescreve o save para garantir que apenas um objeto seja salvo na relação ManyToMany."""
+        vinculo = super().save(commit=False)  # Obtém a instância sem salvar no banco
+
+        if commit:
+            vinculo.save()  # Salva a instância primeiro para poder modificar ManyToMany
+
+            # Verifica se há um profissional selecionado e ajusta a relação
+            profissional = self.cleaned_data.get("id_profissional")
+            if profissional:
+                vinculo.id_profissional.set([profissional])  # Passa como lista
+            else:
+                vinculo.id_profissional.clear()
+
+            # Verifica se há uma turma selecionada e ajusta a relação
+            turma = self.cleaned_data.get("id_turma")
+            if turma:
+                vinculo.id_turma.set([turma])  # Passa como lista
+            else:
+                vinculo.id_turma.clear()
+
+        return vinculo
