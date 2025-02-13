@@ -4,10 +4,11 @@ Variáveis
 - danger: coloração diferente ao interagir
 - href: para qual endereço aponta
 - class: extensor de classe padrão
+- slot: texto auxiliar
 -->
 
 <a href="{{href}}" 
-   class="w-12 h-12 border-white border rounded-md flex justify-center items-center transition-colors text-white
+   class="h-12 text-sm px-2 border-white border rounded-md flex justify-center items-center transition-colors text-white
    hover:bg-white
     {% if not danger %}
       hover:text-tertiary-400
@@ -17,4 +18,5 @@ Variáveis
    "
 >
     {% heroicon_outline icon %}
+    <p class="ms-1">{{ slot }}</p>
 </a>
