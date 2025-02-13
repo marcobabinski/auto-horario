@@ -526,10 +526,17 @@ def export(request):
 
 @login_required
 def editar_vinculo(request, id_atividade):
+    if request.user.is_authenticated:
+        try:
+            profile = Profile.objects.get(user=request.user)
+        except Profile.DoesNotExist:
+            profile = None 
+
     atividade = get_object_or_404(Atividade, pk=id_atividade)
 
+    form = VinculoForm(request.POST, instance=atividade)
+
     if request.method == "POST":
-        form = VinculoForm(request.POST, instance=atividade)
         if form.is_valid():
             form.save()
             messages.success(request, "Vínculo salvo com sucesso!")
@@ -537,7 +544,7 @@ def editar_vinculo(request, id_atividade):
     else:
         form = VinculoForm(instance=atividade)
 
-    return render(request, "editar_vinculo.html", {"form": form, "atividade": atividade})
+    return render(request, "editar_vinculo.html", {"form": form, "atividade": atividade, "profile": profile})
 
 
 @login_required
