@@ -85,6 +85,8 @@ def run(response_data):
                         c.append("P" + str(ATIV[i]["prof"]))  # Identifica o professor
                         if ATIV[i] ["recurso"] is not None:
                           c.append("R" + str(ATIV[i]["recurso"]))
+                        if ATIV[i] ["prof2"] is not None:
+                          c.append("P" + str(ATIV[i]["prof2"]))
         
                 total_conflitos += len(c) - len(set(c))  # Conta os conflitos
         
@@ -165,7 +167,7 @@ def run(response_data):
             for i, atividade in enumerate(ATIV):
                 for t in range(TIMESLOTS):
                     if sol[i][t] == 1:
-                        matriz[t].append([atividade["prof"], atividade["turma"]])
+                        matriz[t].append([atividade["prof"], atividade["turma"], atividade["prof2"], atividade["atv"],])
             
             return matriz
         

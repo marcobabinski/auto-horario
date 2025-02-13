@@ -50,7 +50,8 @@
                 <div class="bg-{{cores|index:forloop.counter0}}-200 p-2 border-b border-{{cores|index:forloop.counter0}}-300 flex flex-col items-center justify-center {% if forloop.parentloop.counter0 == 4 %} rounded-b-md {% endif %}">
                     {% if aula %}
                         {% for a in aula %}
-                            <p><b>{{ a.1 }}</b> - {{ a.0 }}</p>
+                            <p><b>{{a.3}}</b></p>
+                            <p><b>{{ a.1 }}</b> - {{ a.0 }} {% if a.2 != 'Desconhecido' %} , {{ a.2 }} {% endif %} </p>
                         {% endfor %}
                     {% else %}
                     <p class="italic text-slate-500">Vago</p>

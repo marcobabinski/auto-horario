@@ -138,9 +138,9 @@ class AtividadeForm(forms.ModelForm):
 #         return cleaned_data
 
 class VinculoForm(forms.ModelForm):
-    id_profissional = forms.ModelChoiceField(
+    id_profissional = forms.ModelMultipleChoiceField(
         queryset=Profissional.objects.all(),
-        widget=forms.RadioSelect,
+        widget=forms.CheckboxSelectMultiple,
         required=False
     )
     id_turma = forms.ModelChoiceField(
@@ -150,9 +150,9 @@ class VinculoForm(forms.ModelForm):
     )
 
     class Meta:
-        model = VinculoProfissionalAtividade
+        model = Atividade
         fields = ["id_profissional", "id_turma"]
-
+    
     def save(self, commit=True):
         """Sobrescreve o save para garantir que apenas um objeto seja salvo na relação ManyToMany."""
         vinculo = super().save(commit=False)  # Obtém a instância sem salvar no banco
@@ -163,7 +163,7 @@ class VinculoForm(forms.ModelForm):
             # Verifica se há um profissional selecionado e ajusta a relação
             profissional = self.cleaned_data.get("id_profissional")
             if profissional:
-                vinculo.id_profissional.set([profissional])  # Passa como lista
+                vinculo.id_profissional.set(profissional)
             else:
                 vinculo.id_profissional.clear()
 
@@ -175,19 +175,3 @@ class VinculoForm(forms.ModelForm):
                 vinculo.id_turma.clear()
 
         return vinculo
-    
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        print(self.instance.id_turma.first())  # Debug para verificar os valores iniciais
-
-        if self.instance and self.instance.pk:
-            # Define os valores iniciais usando set() para garantir apenas um elemento
-            if self.instance.id_profissional.exists():
-                self.instance.id_profissional.set([self.instance.id_profissional.first()])
-            if self.instance.id_turma.exists():
-                self.instance.id_turma.set([self.instance.id_turma.first()])
-
-            # Define os valores iniciais nos campos do formulário para renderização no template
-            self.fields["id_profissional"].initial = self.instance.id_profissional.first()
-            self.fields["id_turma"].initial = self.instance.id_turma.first()

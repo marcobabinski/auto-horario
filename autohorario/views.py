@@ -25,10 +25,12 @@ def salvar_matriz(matriz):
     
     for periodo in matriz:
         periodo_convertido = []
-        for prof_id, turma_id in periodo:
+        for prof_id, turma_id, prof2_id, atv_id in periodo:
             prof = Profissional.objects.get(id_profissional=prof_id).nome if Profissional.objects.filter(id_profissional=prof_id).exists() else "Desconhecido"
             turma = Turma.objects.get(id_turma=turma_id).nome if Turma.objects.filter(id_turma=turma_id).exists() else "Desconhecido"
-            periodo_convertido.append([prof, turma])
+            prof2 = Profissional.objects.get(id_profissional=prof2_id).nome if Profissional.objects.filter(id_profissional=prof2_id).exists() else "Desconhecido"
+            atv = Atividade.objects.get(id_atividade=atv_id).nome if Atividade.objects.filter(id_atividade=atv_id).exists() else "Desconhecido"
+            periodo_convertido.append([prof, turma, prof2, atv])
         matriz_convertida.append(periodo_convertido)
     
     with open("matriz_periodos.json", "w") as f:
@@ -554,11 +556,16 @@ def script(request):
 
     for atividade in atividades:
         turma = atividade.id_turma.first()
-        profissional = atividade.id_profissional.first()
+
+        profissionais = list(atividade.id_profissional.all())  # Converte para lista para evitar múltiplas queries
+        profissional1 = profissionais[0] if len(profissionais) > 0 else None
+        profissional2 = profissionais[1] if len(profissionais) > 1 else None
 
         response_data.append({
             "turma": turma.id_turma if turma else None,
-            "prof": profissional.id_profissional if profissional else None,
+            "prof": profissional1.id_profissional if profissional1 else None,
+            "prof2": profissional2.id_profissional if profissional2 else None,
+            "atv": atividade.id_atividade,
             "ch": atividade.periodos,
             "duplas": 1 if atividade.id_caracteristica.nome == "Geminar" else 0,
             # "recurso": atividade.id_atividade.id_caracteristica.id_caracteristica if atividade.id_atividade.id_caracteristica else None
