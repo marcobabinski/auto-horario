@@ -2,18 +2,6 @@
 
 {% block content %}
 {% load static %}
-
-{% if messages %}
-<div id="alerts-area" class="absolute top-0 left-1/2 -translate-x-1/2 flex flex-col py-2">
-    {% for m in messages %}
-    <c-alert
-           tags="{{ m.tags }}"
-           title=""
-           text="{{ m.message }}"
-    />
-    {% endfor %}
-</div>
-{% endif %}
     <div class="h-svh w-full bg-background flex">
         <div class="h-svh w-[600px] max-w-[40%] md:block hidden">
             <img src="{% static "images/login-splash.jpeg" %}" alt="" srcset="" class="h-full w-full object-cover">

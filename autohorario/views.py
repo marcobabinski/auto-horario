@@ -528,8 +528,9 @@ def export(request):
 def editar_vinculo(request, id_atividade):
     atividade = get_object_or_404(Atividade, pk=id_atividade)
 
+    form = VinculoForm(request.POST, instance=atividade)
+
     if request.method == "POST":
-        form = VinculoForm(request.POST, instance=atividade)
         if form.is_valid():
             form.save()
             messages.success(request, "Vínculo salvo com sucesso!")

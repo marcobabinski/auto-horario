@@ -179,7 +179,15 @@ class VinculoForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        # Definir valores iniciais apenas se o formulário não estiver recebendo dados via POST
-        if not self.is_bound:
-            self.fields["id_profissional"].initial = Profissional.objects.first()
-            self.fields["id_turma"].initial = Turma.objects.first()
+        print(self.instance.id_turma.first())  # Debug para verificar os valores iniciais
+
+        if self.instance and self.instance.pk:
+            # Define os valores iniciais usando set() para garantir apenas um elemento
+            if self.instance.id_profissional.exists():
+                self.instance.id_profissional.set([self.instance.id_profissional.first()])
+            if self.instance.id_turma.exists():
+                self.instance.id_turma.set([self.instance.id_turma.first()])
+
+            # Define os valores iniciais nos campos do formulário para renderização no template
+            self.fields["id_profissional"].initial = self.instance.id_profissional.first()
+            self.fields["id_turma"].initial = self.instance.id_turma.first()
