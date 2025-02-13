@@ -9,7 +9,7 @@ Variáveis
 - href: link
 -->
 
-<a href="{{ href }}">
+<a href="{{ href }}" class="inline-block w-auto">
     <input
     {{ attrs }}
     value="{{slot}}"
@@ -28,7 +28,7 @@ Variáveis
     {% if rounded %}
     rounded-full
     {% endif %}
-    focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none cursor-pointer transition-all
-    {{ class }}"
+    focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none cursor-pointer transition-all w-auto min-w-0 max-w-full text-center
+     {{ class }}"
     >
 </a>

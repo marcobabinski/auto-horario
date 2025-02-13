@@ -8,12 +8,19 @@
 
         {% for field in form %}
             <div class="mb-5">
-                <label for="{{ field.id_for_label }}" class="block mb-2 text-sm font-medium text-gray-900">{{ field.label }}</label>
+                <label for="{{ field.id_for_label }}" class="block mb-2 text-base font-medium text-gray-900">{{ field.label }}
+                    {% if field.field.required %}
+                    <span class="text-red-500">*</span>
+                    {% endif %}
+                </label>
                 {{ field }}
+                <p class="text-sm text-primary-800">{{ field.field.help_text }}</p>
             </div>
         {% endfor %}
         
-        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Salvar</button>
-        <a href="{% url 'turmas' %}" class="bg-gray-300 px-4 py-2 rounded">Cancelar</a>
+        <div class="grid grid-cols-2">
+            <c-form-button color="tertiary" variant="primary" type="submit">Salvar</c-form-button>
+            <c-a-button color="neutral" variant="primary" href="{% url 'turmas' %}" >Cancelar</c-a-button>
+        </div>
     </form>    
 {% endblock screen %}

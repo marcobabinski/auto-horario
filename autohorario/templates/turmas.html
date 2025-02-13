@@ -14,7 +14,7 @@
                     title={{t.nome}}
                     urlDelete="{% url "delete_turma" id_turma=t.pk %}"
                     urlEdit="{% url "edit_turma" id_turma=t.pk %}"
-                    description="Quantidade de alunos: {{t.qnt_de_alunos}} alunos"
+                    description="Quantidade de alunos: {{ t.qnt_de_alunos|default:"não informado"}}"
                 />
             {% endfor %}
             <c-card-new href="{% url "new_turma" %}"/>

@@ -12,7 +12,7 @@
                 urlDelete="{% url "delete_atividade" id_atividade=a.pk %}"
                 urlEdit="{% url "edit_atividade" id_atividade=a.pk %}"
                 urlLink="{% url "editar_vinculo" id_atividade=a.pk %}"
-                alt="{{a.carga_horaria}} h/semana"
+                alt="{{a.carga_horaria|default:"N/A"}} h/semana"
                 description="{{a.id_caracteristica.nome}}"
             />
             {% endfor %}

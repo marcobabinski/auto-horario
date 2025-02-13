@@ -23,10 +23,10 @@ class TurmaForm(forms.ModelForm):
             }
         widgets = {
             'nome': forms.TextInput(attrs={
-                'class': 'w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500'
+                'class': 'w-full border border-primary-700 text-primary-700 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500'
             }),
             'qnt_de_alunos': forms.TextInput(attrs={
-                'class': 'w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500'
+                'class': 'w-full border border-primary-700 text-primary-700 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500'
             }),
         }
 
@@ -39,21 +39,21 @@ class ProfissionalForm(forms.ModelForm):
     
     class Meta:
         model = Profissional
-        fields = ['nome', 'funcao', 'endereco']
+        fields = ['nome', 'funcao']
         labels = {
             'nome': 'Nome do Profissional',
-            'endereco': 'Endereço',
+            # 'endereco': 'Endereço',
             'funcao': 'Função',
         }
         widgets = {
             'nome': forms.TextInput(attrs={
-                'class': 'w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500'
+                'class': 'w-full border border-primary-700 text-primary-700 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500'
             }),
             'endereco': forms.TextInput(attrs={
-                'class': 'w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500'
+                'class': 'w-full border border-primary-700 text-primary-700 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500'
             }),
             'funcao': forms.TextInput(attrs={
-                'class': 'w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500'
+                'class': 'w-full border border-primary-700 text-primary-700 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500'
             }),
         }
 
@@ -62,9 +62,10 @@ class AtividadeForm(forms.ModelForm):
         queryset=Caracteristica.objects.all(),
         label="Categoria",
         widget=forms.Select(attrs={
-            'class': 'w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500'
+            'class': 'w-full border border-primary-700 text-primary-700 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500'
         }),
-        empty_label="Selecione uma categoria" 
+        empty_label="Selecione uma categoria",
+        help_text="Geminar fará com que todos os períodos ocorram sequencialmente. Separar fará com que todos os períodos ocorram em momentos distintos.",
     )
 
     # dia_da_semana = forms.ChoiceField(
@@ -73,18 +74,18 @@ class AtividadeForm(forms.ModelForm):
     #              (7, 'Sábado')],
     #     label="Dia da Semana",
     #     widget=forms.Select(attrs={
-    #         'class': 'w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500'
+    #         'class': 'w-full border border-primary-700 text-primary-700 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500'
     #     }),
     # )
     
-    periodos = forms.IntegerField(
-        min_value=1,
-        max_value=20,  # Ajuste conforme suas regras
-        label="Períodos",
-        widget=forms.NumberInput(attrs={
-            'class': 'w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500'
-        })
-    )
+    # periodos = forms.IntegerField(
+    #     min_value=1,
+    #     max_value=20,  # Ajuste conforme suas regras
+    #     label="Períodos",
+    #     widget=forms.NumberInput(attrs={
+    #         'class': 'w-full border border-primary-700 text-primary-700 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500'
+    #     })
+    # )
 
     class Meta:
         model = Atividade
@@ -95,10 +96,13 @@ class AtividadeForm(forms.ModelForm):
         }
         widgets = {
             'nome': forms.TextInput(attrs={
-                'class': 'w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500'
+                'class': 'w-full border border-primary-700 text-primary-700 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500'
             }),
             'carga_horaria': forms.NumberInput(attrs={
-                'class': 'w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500'
+                'class': 'w-full border border-primary-700 text-primary-700 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500'
+            }),
+            'periodos': forms.TextInput(attrs={
+                'class': 'w-full border border-primary-700 text-primary-700 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500'
             }),
         }
 
@@ -107,7 +111,7 @@ class AtividadeForm(forms.ModelForm):
 #         queryset=Profissional.objects.all(),
 #         label="Profissional",
 #         widget=forms.Select(attrs={
-#             'class': 'w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500'
+#             'class': 'w-full border border-primary-700 text-primary-700 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500'
 #         }),
 #         empty_label="Selecione um profissional" 
 #     )
@@ -116,7 +120,7 @@ class AtividadeForm(forms.ModelForm):
 #         queryset=Atividade.objects.all(),
 #         label="Atividade",
 #         widget=forms.Select(attrs={
-#             'class': 'w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500'
+#             'class': 'w-full border border-primary-700 text-primary-700 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500'
 #         }),
 #         empty_label="Selecione uma atividades" 
 #     )

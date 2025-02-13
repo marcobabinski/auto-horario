@@ -16,7 +16,7 @@
                     title={{p.nome}}
                     urlDelete="{% url "delete_profissional" id_profissional=p.pk %}"
                     urlEdit="{% url "edit_profissional" id_profissional=p.pk %}"
-                    description="{{p.funcao}}"
+                    description="{{p.funcao|default:"Função não informada"}}"
                 />  
             {% endfor %}
             <c-card-new href="{% url "new_profissional" %}"/>
